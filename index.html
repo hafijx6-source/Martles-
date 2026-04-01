@@ -1,175 +1,205 @@
-<!DOCTYPE html>
+      <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Martles E-Commerce</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f5f5;}
-    header { background:#111; color:#fff; padding:15px; text-align:center;}
-    header nav button { margin: 0 5px; padding:8px 12px; cursor:pointer; }
-    .page { padding:20px; }
-    .products { display:flex; flex-wrap:wrap; gap:15px; justify-content:center; }
-    .product-card { background:#fff; padding:10px; border-radius:8px; width:200px; text-align:center; box-shadow:0 0 5px rgba(0,0,0,0.2);}
-    .product-card img { width:100%; height:150px; object-fit:cover; border-radius:5px; }
-    button.add-cart { background:#28a745; color:#fff; border:none; padding:8px; margin-top:5px; cursor:pointer; border-radius:5px;}
-    #cart-items div { background:#fff; margin:5px 0; padding:10px; border-radius:5px; }
-    input, textarea, select { width:100%; padding:8px; margin:5px 0; border-radius:5px; border:1px solid #ccc; }
-    button[type="submit"] { background:#007bff; color:#fff; border:none; padding:10px; cursor:pointer; border-radius:5px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Martles E-Commerce</title>
+<style>
+  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f5f5;}
+  header { background:#111; color:#fff; padding:15px; text-align:center;}
+  header nav button { margin: 0 5px; padding:8px 12px; cursor:pointer; }
+  .page { padding:20px; }
+  .products { display:flex; flex-wrap:wrap; gap:15px; justify-content:center; }
+  .product-card { background:#fff; padding:10px; border-radius:8px; width:200px; text-align:center; box-shadow:0 0 5px rgba(0,0,0,0.2); cursor:pointer; }
+  .product-card img { width:100%; height:150px; object-fit:cover; border-radius:5px; }
+  button.add-cart { background:#28a745; color:#fff; border:none; padding:8px; margin-top:5px; cursor:pointer; border-radius:5px;}
+  #cart-items div { background:#fff; margin:5px 0; padding:10px; border-radius:5px; }
+  input, textarea, select { width:100%; padding:8px; margin:5px 0; border-radius:5px; border:1px solid #ccc; }
+  button[type="submit"] { background:#007bff; color:#fff; border:none; padding:10px; cursor:pointer; border-radius:5px; }
+  .gallery { display:flex; gap:5px; overflow-x:auto; margin:10px 0; }
+  .gallery img { width:100px; height:100px; object-fit:cover; border-radius:5px; cursor:pointer; }
+  #product-detail img.main-img { width:100%; height:250px; object-fit:cover; border-radius:5px; margin-bottom:10px; }
+</style>
 </head>
 <body>
-  <header>
-    <h1>Martles</h1>
-    <nav>
-      <button onclick="showPage('home')">Home</button>
-      <button onclick="showPage('cart')">Cart (<span id="cart-count">0</span>)</button>
-      <button onclick="showPage('account')">Account</button>
-    </nav>
-  </header>
 
-  <!-- Home Page -->
-  <section id="home" class="page">
-    <div class="products" id="products"></div>
-  </section>
+<header>
+  <h1>Martles</h1>
+  <nav>
+    <button onclick="showPage('home')">Home</button>
+    <button onclick="showPage('cart')">Cart (<span id="cart-count">0</span>)</button>
+    <button onclick="showPage('account')">Account</button>
+  </nav>
+</header>
 
-  <!-- Cart Page -->
-  <section id="cart" class="page" style="display:none;">
-    <h2>Cart</h2>
-    <div id="cart-items"></div>
-    <h3>Total: $<span id="total">0</span></h3>
-    <h3>Delivery Details</h3>
-    <form id="checkout-form">
-      <input type="text" placeholder="Full Name" required id="name">
-      <input type="tel" placeholder="Phone" required id="phone">
-      <input type="email" placeholder="Email" required id="email">
-      <textarea placeholder="Full Address" required id="address"></textarea>
-      <h4>Payment Method</h4>
-      <select id="payment">
-        <option value="bkash">Bkash</option>
-        <option value="nagad">Nagad</option>
-        <option value="cod">Cash on Delivery</option>
-      </select>
-      <button type="submit">Place Order</button>
-    </form>
-    <div id="order-message"></div>
-  </section>
+<!-- Home Page -->
+<section id="home" class="page">
+  <div class="products" id="products"></div>
+</section>
 
-  <!-- Account Page -->
-  <section id="account" class="page" style="display:none;">
-    <h2>Account</h2>
-    <form id="account-form">
-      <input type="email" placeholder="Email" id="acc-email">
-      <input type="tel" placeholder="Phone" id="acc-phone">
-      <button type="submit">Sign In / Create Account</button>
-    </form>
-    <div id="account-message"></div>
-  </section>
+<!-- Product Detail Page -->
+<section id="product-detail" class="page" style="display:none;">
+  <h2 id="detail-title"></h2>
+  <img src="" alt="" class="main-img" id="detail-main-img">
+  <div class="gallery" id="detail-gallery"></div>
+  <p id="detail-description"></p>
+  <h3>$<span id="detail-price"></span></h3>
+  <button class="add-cart" id="detail-add-cart">Add to Cart</button>
+</section>
 
-  <script>
-    // Products Data
-    const products = [];
-    for(let i=1; i<=12; i++){
-      products.push({
-        id: i,
-        title: "Product " + i,
-        price: (i*10).toFixed(2),
-        description: "This is the description of product " + i,
-        images: [
-          `https://picsum.photos/200/150?random=${i*1}`,
-          `https://picsum.photos/200/150?random=${i*2}`,
-          `https://picsum.photos/200/150?random=${i*3}`,
-          `https://picsum.photos/200/150?random=${i*4}`
-        ]
-      });
-    }
+<!-- Cart Page -->
+<section id="cart" class="page" style="display:none;">
+  <h2>Cart</h2>
+  <div id="cart-items"></div>
+  <h3>Total: $<span id="total">0</span></h3>
+  <h3>Delivery Details</h3>
+  <form id="checkout-form">
+    <input type="text" placeholder="Full Name" required id="name">
+    <input type="tel" placeholder="Phone" required id="phone">
+    <input type="email" placeholder="Email" required id="email">
+    <textarea placeholder="Full Address" required id="address"></textarea>
+    <h4>Payment Method</h4>
+    <select id="payment">
+      <option value="bkash">Bkash</option>
+      <option value="nagad">Nagad</option>
+      <option value="cod">Cash on Delivery</option>
+    </select>
+    <button type="submit">Place Order</button>
+  </form>
+  <div id="order-message"></div>
+</section>
 
-    let cart = [];
+<!-- Account Page -->
+<section id="account" class="page" style="display:none;">
+  <h2>Account</h2>
+  <form id="account-form">
+    <input type="email" placeholder="Email" id="acc-email">
+    <input type="tel" placeholder="Phone" id="acc-phone">
+    <button type="submit">Sign In / Create Account</button>
+  </form>
+  <div id="account-message"></div>
+</section>
 
-    // Render products
-    function renderProducts(){
-      const container = document.getElementById('products');
-      container.innerHTML = '';
-      products.forEach(p=>{
-        const div = document.createElement('div');
-        div.className = 'product-card';
-        div.innerHTML = `
-          <h3>${p.title}</h3>
-          <img src="${p.images[0]}" alt="${p.title}">
-          <p>${p.description}</p>
-          <h4>$${p.price}</h4>
-          <button class="add-cart" onclick="addToCart(${p.id})">Add to Cart</button>
-        `;
-        container.appendChild(div);
-      });
-    }
+<script>
+// Products Data
+const products = [];
+for(let i=1; i<=12; i++){
+  products.push({
+    id: i,
+    title: "Product " + i,
+    price: (i*10).toFixed(2),
+    description: "This is the description of product " + i,
+    images: [
+      `https://picsum.photos/400/300?random=${i*1}`,
+      `https://picsum.photos/400/300?random=${i*2}`,
+      `https://picsum.photos/400/300?random=${i*3}`,
+      `https://picsum.photos/400/300?random=${i*4}`
+    ]
+  });
+}
 
-    // Add to Cart
-    function addToCart(id){
-      const product = products.find(p=>p.id===id);
-      cart.push(product);
-      document.getElementById('cart-count').innerText = cart.length;
-      alert(`${product.title} added to cart!`);
-    }
+let cart = [];
 
-    // Show Page
-    function showPage(page){
-      document.querySelectorAll('.page').forEach(p=>p.style.display='none');
-      document.getElementById(page).style.display = 'block';
-      if(page==='cart') renderCart();
-    }
+// Render products
+function renderProducts(){
+  const container = document.getElementById('products');
+  container.innerHTML = '';
+  products.forEach(p=>{
+    const div = document.createElement('div');
+    div.className = 'product-card';
+    div.innerHTML = `
+      <h3>${p.title}</h3>
+      <img src="${p.images[0]}" alt="${p.title}">
+      <p>${p.description.substring(0,40)}...</p>
+      <h4>$${p.price}</h4>
+    `;
+    div.onclick = ()=> showProductDetail(p.id);
+    container.appendChild(div);
+  });
+}
 
-    // Render Cart
-    function renderCart(){
-      const container = document.getElementById('cart-items');
-      container.innerHTML = '';
-      let total = 0;
-      cart.forEach((p,i)=>{
-        total += parseFloat(p.price);
-        const div = document.createElement('div');
-        div.innerHTML = `${p.title} - $${p.price} <button onclick="removeFromCart(${i})">Remove</button>`;
-        container.appendChild(div);
-      });
-      document.getElementById('total').innerText = total.toFixed(2);
-    }
+// Show Product Detail
+function showProductDetail(id){
+  const product = products.find(p=>p.id===id);
+  document.getElementById('detail-title').innerText = product.title;
+  document.getElementById('detail-main-img').src = product.images[0];
+  const gallery = document.getElementById('detail-gallery');
+  gallery.innerHTML = '';
+  product.images.forEach(img=>{
+    const im = document.createElement('img');
+    im.src = img;
+    im.onclick = ()=> document.getElementById('detail-main-img').src = img;
+    gallery.appendChild(im);
+  });
+  document.getElementById('detail-description').innerText = product.description;
+  document.getElementById('detail-price').innerText = product.price;
+  document.getElementById('detail-add-cart').onclick = ()=>{
+    cart.push(product);
+    document.getElementById('cart-count').innerText = cart.length;
+    alert(`${product.title} added to cart!`);
+  }
+  showPage('product-detail');
+}
 
-    // Remove from cart
-    function removeFromCart(index){
-      cart.splice(index,1);
-      document.getElementById('cart-count').innerText = cart.length;
-      renderCart();
-    }
+// Show Page
+function showPage(page){
+  document.querySelectorAll('.page').forEach(p=>p.style.display='none');
+  document.getElementById(page).style.display = 'block';
+  if(page==='cart') renderCart();
+}
 
-    // Checkout Form
-    document.getElementById('checkout-form').addEventListener('submit', function(e){
-      e.preventDefault();
-      const name = document.getElementById('name').value;
-      const phone = document.getElementById('phone').value;
-      const email = document.getElementById('email').value;
-      const address = document.getElementById('address').value;
-      const payment = document.getElementById('payment').value;
-      if(cart.length===0){ alert("Cart is empty!"); return; }
-      document.getElementById('order-message').innerHTML = `
-        <h3>Thank you ${name}! Your order has been placed.</h3>
-        <p>Total: $${cart.reduce((sum,p)=>sum+parseFloat(p.price),0).toFixed(2)}</p>
-        <p>Payment Method: ${payment}</p>
-        <p>Delivery Address: ${address}</p>
-      `;
-      cart = [];
-      document.getElementById('cart-count').innerText = 0;
-      renderCart();
-    });
+// Render Cart
+function renderCart(){
+  const container = document.getElementById('cart-items');
+  container.innerHTML = '';
+  let total = 0;
+  cart.forEach((p,i)=>{
+    total += parseFloat(p.price);
+    const div = document.createElement('div');
+    div.innerHTML = `${p.title} - $${p.price} <button onclick="removeFromCart(${i})">Remove</button>`;
+    container.appendChild(div);
+  });
+  document.getElementById('total').innerText = total.toFixed(2);
+}
 
-    // Account Form
-    document.getElementById('account-form').addEventListener('submit', function(e){
-      e.preventDefault();
-      const email = document.getElementById('acc-email').value;
-      const phone = document.getElementById('acc-phone').value;
-      document.getElementById('account-message').innerHTML = `<p>Account created/signed in with Email: ${email} & Phone: ${phone}</p>`;
-    });
-      
-    // Initial render
-    renderProducts();
-  </script>
+// Remove from cart
+function removeFromCart(index){
+  cart.splice(index,1);
+  document.getElementById('cart-count').innerText = cart.length;
+  renderCart();
+}
+
+// Checkout Form
+document.getElementById('checkout-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const name = document.getElementById('name').value;
+  const phone = document.getElementById('phone').value;
+  const email = document.getElementById('email').value;
+  const address = document.getElementById('address').value;
+  const payment = document.getElementById('payment').value;
+  if(cart.length===0){ alert("Cart is empty!"); return; }
+  document.getElementById('order-message').innerHTML = `
+    <h3>Thank you ${name}! Your order has been placed.</h3>
+    <p>Total: $${cart.reduce((sum,p)=>sum+parseFloat(p.price),0).toFixed(2)}</p>
+    <p>Payment Method: ${payment}</p>
+    <p>Delivery Address: ${address}</p>
+  `;
+  cart = [];
+  document.getElementById('cart-count').innerText = 0;
+  renderCart();
+});
+
+// Account Form
+document.getElementById('account-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const email = document.getElementById('acc-email').value;
+  const phone = document.getElementById('acc-phone').value;
+  document.getElementById('account-message').innerHTML = `<p>Account created/signed in with Email: ${email} & Phone: ${phone}</p>`;
+});
+
+// Initial render
+renderProducts();
+</script>
+
 </body>
 </html>
