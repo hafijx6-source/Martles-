@@ -3,169 +3,262 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Martles</title>
-
+<title>Martles E-Commerce</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+/* --- Reset & Base --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Poppins', sans-serif; background: #f0f2f5; color: #333; line-height: 1.5; transition: 0.3s; padding-bottom: 70px; }
 
-body{
-  font-family: Arial, sans-serif;
-  background:#eaeded;
-}
+/* --- Header (for logo only) --- */
+header { background: #1a1a2e; color: #fff; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+header h1 { font-size: 2rem; font-weight: 700; letter-spacing: 2px; color: #4ecca3; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
 
-/* HEADER */
-header{
-  background:#131921;
-  color:#fff;
-  padding:10px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
+/* --- Bottom Navigation Bar --- */
+.navbar { position: fixed; bottom: 0; left: 0; width: 100%; background: #fff; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-around; align-items: center; padding: 10px 0; z-index: 100; transition: 0.3s; }
+.navbar button { background: none; border: none; color: #333; font-size: 1rem; font-weight: 500; display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: 0.3s; }
+.navbar button span { font-size: 0.7rem; margin-top: 2px; }
+.navbar button:hover { color: #4ecca3; }
+.navbar button.active { color: #4ecca3; }
 
-.logo{
-  font-size:20px;
-  font-weight:bold;
-  color:#ff9900;
-}
+/* --- Dark Mode --- */
+body.dark { background: #121212; color: #eee; }
+body.dark header { background: #0f0f1a; }
+body.dark .navbar { background: #1a1a2e; }
+body.dark .navbar button { color: #eee; }
+body.dark .navbar button.active { color: #4ecca3; }
 
-.search-box{
-  flex:1;
-  display:flex;
-}
+/* --- Pages --- */
+.page { display: none; padding: 20px; max-width: 1200px; margin: auto; transition: 0.3s; }
+.page.active { display: block; }
 
-.search-box input{
-  width:100%;
-  padding:10px;
-  border:none;
-}
+/* --- Search Bar --- */
+#search-container { margin-bottom: 20px; display: flex; gap: 10px; }
+#search-container input { flex: 1; padding: 10px 12px; border-radius: 8px; border: 1px solid #ccc; }
+#search-container button { background: #ff6b6b; color: #fff; padding: 10px 15px; border-radius: 8px; }
 
-.search-box button{
-  background:#febd69;
-  border:none;
-  padding:10px 15px;
-  cursor:pointer;
-}
+/* --- Products Grid --- */
+.products { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 20px; }
+.product-card { background: #fff; padding: 15px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; transition: 0.3s; cursor: pointer; }
+.product-card:hover { transform: translateY(-5px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+.product-card img { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; }
+.product-card h3 { margin: 10px 0 5px; font-size: 1.1rem; }
+.product-card h4 { color: #4ecca3; margin-bottom: 10px; }
+.add-cart { background: #4ecca3; color: #fff; padding: 8px 12px; border-radius: 8px; width: 100%; }
+.add-cart:hover { background: #3ba278; }
 
-/* PRODUCTS */
-.products{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
-  gap:10px;
-  padding:10px;
-}
+/* --- Cart Page --- */
+#cart-items div { background: #fff; margin: 10px 0; padding: 10px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.remove-cart { background: #ff6b6b; color: #fff; padding: 5px 10px; border-radius: 6px; }
+.remove-cart:hover { background: #e53939; }
+.quantity-control { display: flex; gap: 5px; align-items: center; }
+.quantity-control input { width: 50px; text-align: center; border-radius: 5px; padding: 5px; }
 
-.product{
-  background:#fff;
-  padding:10px;
-  border-radius:5px;
-}
+/* --- Forms --- */
+input, textarea, select { width: 100%; padding: 10px; margin: 5px 0 15px 0; border-radius: 8px; border: 1px solid #ccc; }
+button[type="submit"] { background: #4ecca3; color: #fff; padding: 10px; border-radius: 8px; width: 100%; }
+button[type="submit"]:hover { background: #3ba278; }
 
-.product img{
-  width:100%;
-  height:150px;
-  object-fit:cover;
-}
+/* --- Product Detail --- */
+#product-detail img.main-img { width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 10px; }
+.gallery { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 15px; }
+.gallery img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer; }
+.gallery img:hover { border: 2px solid #4ecca3; }
 
-.product h3{
-  font-size:14px;
-  margin:5px 0;
-}
-
-.price{
-  color:#b12704;
-  font-weight:bold;
-}
-
-.btn{
-  background:#ffd814;
-  border:1px solid #fcd200;
-  padding:8px;
-  width:100%;
-  margin-top:5px;
-  cursor:pointer;
-}
-
-/* NAVBAR */
-.navbar{
-  position:fixed;
-  bottom:0;
-  width:100%;
-  background:#fff;
-  display:flex;
-  justify-content:space-around;
-  padding:10px;
-  border-top:1px solid #ccc;
+/* --- Responsive --- */
+@media(max-width:600px) {
+  .product-card img { height: 150px; }
+  .gallery img { width: 60px; height: 60px; }
 }
 </style>
 </head>
-
 <body>
 
 <header>
-  <div class="logo">Martles</div>
-
-  <div class="search-box">
-    <input type="text" id="search" placeholder="Search Martles">
-    <button onclick="search()">🔍</button>
-  </div>
+  <h1>Martles</h1>
 </header>
 
-<div class="products" id="products"></div>
+<!-- Pages -->
+<section id="home" class="page active">
+  <div id="search-container">
+    <input type="text" id="search" placeholder="Search products...">
+    <button id="search-btn">Search</button>
+  </div>
+  <div class="products" id="products"></div>
+</section>
 
+<section id="product-detail" class="page">
+  <h2 id="detail-title"></h2>
+  <img src="" alt="" class="main-img" id="detail-main-img" loading="lazy">
+  <div class="gallery" id="detail-gallery"></div>
+  <p id="detail-description"></p>
+  <h3>$<span id="detail-price"></span></h3>
+  <button class="add-cart" id="detail-add-cart">Add to Cart</button>
+</section>
+
+<section id="cart" class="page">
+  <h2>Cart</h2>
+  <div id="cart-items"></div>
+  <h3>Total: $<span id="total">0</span></h3>
+  <h3>Delivery Details</h3>
+  <form id="checkout-form">
+    <input type="text" placeholder="Full Name" required id="name">
+    <input type="tel" placeholder="Phone" required id="phone">
+    <input type="email" placeholder="Email" required id="email">
+    <textarea placeholder="Full Address" required id="address"></textarea>
+    <select id="payment">
+      <option value="bkash">Bkash</option>
+      <option value="nagad">Nagad</option>
+      <option value="cod">Cash on Delivery</option>
+    </select>
+    <button type="submit">Place Order</button>
+  </form>
+  <div id="order-message"></div>
+</section>
+
+<section id="account" class="page">
+  <h2>Account</h2>
+  <form id="account-form">
+    <input type="email" placeholder="Email" id="acc-email">
+    <input type="tel" placeholder="Phone" id="acc-phone">
+    <button type="submit">Sign In / Create Account</button>
+  </form>
+  <div id="account-message"></div>
+</section>
+
+<!-- Bottom Navigation Bar -->
 <div class="navbar">
-  <div onclick="home()">🏠 Home</div>
-  <div onclick="cartPage()">🛒 Cart</div>
+  <button id="nav-home" class="active">🏠<span>Home</span></button>
+  <button id="nav-cart">🛒<span>Cart</span></button>
+  <button id="nav-account">👤<span>Account</span></button>
+  <button id="toggle-dark">🌙<span>Dark</span></button>
 </div>
 
 <script>
+// --- Products Data ---
 const products=[];
 for(let i=1;i<=12;i++){
-  products.push({
-    id:i,
-    title:"Product "+i,
-    price:(i*10),
-    img:`https://picsum.photos/200?random=${i}`
+  products.push({id:i,title:"Product "+i,price:(i*10).toFixed(2),description:"This is the description of product "+i,images:[`https://picsum.photos/400/300?random=${i*1}`,`https://picsum.photos/400/300?random=${i*2}`,`https://picsum.photos/400/300?random=${i*3}`,`https://picsum.photos/400/300?random=${i*4}`]});
+}
+
+// --- Cart ---
+let cart=JSON.parse(localStorage.getItem('cart'))||[];
+
+// --- Render Products ---
+function renderProducts(filter=""){
+  const container=document.getElementById('products');
+  container.innerHTML='';
+  let filtered=products.filter(p=>p.title.toLowerCase().includes(filter.toLowerCase()));
+  filtered.forEach(p=>{
+    const div=document.createElement('div');
+    div.className='product-card';
+    div.innerHTML=`<h3>${p.title}</h3>
+                   <img src="${p.images[0]}" alt="${p.title}" loading="lazy">
+                   <h4>$${p.price}</h4>
+                   <button class="add-cart">Add to Cart</button>`;
+    div.querySelector('.add-cart').addEventListener('click',e=>{e.stopPropagation();addToCart(p.id);});
+    div.addEventListener('click',()=>showProductDetail(p.id));
+    container.appendChild(div);
   });
 }
 
-let cart=[];
-
-function render(data){
-  const p=document.getElementById("products");
-  p.innerHTML="";
-  data.forEach(item=>{
-    p.innerHTML+=`
-    <div class="product">
-      <img src="${item.img}">
-      <h3>${item.title}</h3>
-      <div class="price">$${item.price}</div>
-      <button class="btn" onclick="add(${item.id})">Add to Cart</button>
-    </div>`;
+// --- Product Detail ---
+function showProductDetail(id){
+  const product=products.find(p=>p.id===id);
+  document.getElementById('detail-title').innerText=product.title;
+  document.getElementById('detail-main-img').src=product.images[0];
+  const gallery=document.getElementById('detail-gallery');
+  gallery.innerHTML='';
+  product.images.forEach(img=>{
+    const im=document.createElement('img');
+    im.src=img; im.loading="lazy";
+    im.onclick=()=>document.getElementById('detail-main-img').src=img;
+    gallery.appendChild(im);
   });
+  document.getElementById('detail-description').innerText=product.description;
+  document.getElementById('detail-price').innerText=product.price;
+  document.getElementById('detail-add-cart').onclick=()=>addToCart(product.id);
+  showPage('product-detail');
 }
 
-function add(id){
-  cart.push(id);
-  alert("Added to cart");
+// --- Pages ---
+function showPage(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(page).classList.add('active');
+  document.querySelectorAll('.navbar button').forEach(btn=>btn.classList.remove('active'));
+  if(page==='home') document.getElementById('nav-home').classList.add('active');
+  if(page==='cart') document.getElementById('nav-cart').classList.add('active');
+  if(page==='account') document.getElementById('nav-account').classList.add('active');
 }
 
-function search(){
-  const val=document.getElementById("search").value.toLowerCase();
-  const filtered=products.filter(p=>p.title.toLowerCase().includes(val));
-  render(filtered);
+// --- Cart Functions ---
+function addToCart(id){
+  const product=products.find(p=>p.id===id);
+  const existing=cart.find(item=>item.id===id);
+  if(existing){existing.quantity+=1;} else{cart.push({...product,quantity:1});}
+  updateCart(); alert(`${product.title} added to cart!`);
+}
+function removeFromCart(id){cart=cart.filter(item=>item.id!==id);updateCart();}
+function updateCart(){
+  localStorage.setItem('cart',JSON.stringify(cart));
+  document.getElementById('cart-count').innerText=cart.reduce((sum,item)=>sum+item.quantity,0);
+  renderCart();
+}
+function renderCart(){
+  const container=document.getElementById('cart-items'); container.innerHTML=''; let total=0;
+  cart.forEach(item=>{
+    total+=parseFloat(item.price)*item.quantity;
+    const div=document.createElement('div');
+    div.innerHTML=`<span>${item.title} ($${item.price})</span>
+                   <div class="quantity-control">
+                     <input type="number" min="1" value="${item.quantity}">
+                     <button class="remove-cart">Remove</button>
+                   </div>`;
+    div.querySelector('.remove-cart').addEventListener('click',()=>removeFromCart(item.id));
+    div.querySelector('input').addEventListener('change',e=>{item.quantity=parseInt(e.target.value)||1;updateCart();});
+    container.appendChild(div);
+  });
+  document.getElementById('total').innerText=total.toFixed(2);
 }
 
-function home(){
-  render(products);
-}
+// --- Checkout ---
+document.getElementById('checkout-form').addEventListener('submit',function(e){
+  e.preventDefault();
+  if(cart.length===0){alert("Cart is empty!");return;}
+  const name=document.getElementById('name').value;
+  const phone=document.getElementById('phone').value;
+  const email=document.getElementById('email').value;
+  const address=document.getElementById('address').value;
+  const payment=document.getElementById('payment').value;
+  document.getElementById('order-message').innerHTML=`<h3>Thank you ${name}! Your order has been placed.</h3>
+  <p>Total: $${cart.reduce((sum,p)=>sum+parseFloat(p.price)*p.quantity,0).toFixed(2)}</p>
+  <p>Payment Method: ${payment}</p>
+  <p>Delivery Address: ${address}</p>`;
+  cart=[]; updateCart(); document.getElementById('checkout-form').reset();
+});
 
-function cartPage(){
-  alert("Cart Items: "+cart.length);
-}
+// --- Account ---
+document.getElementById('account-form').addEventListener('submit',function(e){
+  e.preventDefault();
+  const email=document.getElementById('acc-email').value;
+  const phone=document.getElementById('acc-phone').value;
+  document.getElementById('account-message').innerHTML=`<p>Account created/signed in with Email: ${email} & Phone: ${phone}</p>`;
+});
 
-render(products);
+// --- Navigation ---
+document.getElementById('nav-home').addEventListener('click',()=>showPage('home'));
+document.getElementById('nav-cart').addEventListener('click',()=>{showPage('cart');renderCart();});
+document.getElementById('nav-account').addEventListener('click',()=>showPage('account'));
+
+// --- Search ---
+document.getElementById('search-btn').addEventListener('click',()=>{renderProducts(document.getElementById('search').value);});
+
+// --- Dark Mode Toggle ---
+document.getElementById('toggle-dark').addEventListener('click',()=>{
+  document.body.classList.toggle('dark');
+});
+
+// --- Initial Render ---
+renderProducts(); updateCart();
 </script>
-
 </body>
 </html>
