@@ -1,62 +1,175 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>E-Commerce Demo</title>
+  <title>Martles E-Commerce</title>
   <style>
-    body { font-family: Arial; margin:0; background:#f5f5f5; }
-    header { background:#222; color:#fff; padding:15px; text-align:center; }
-    .container { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:15px; padding:20px; }
-    .product { background:#fff; padding:15px; border-radius:10px; text-align:center; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
-    .product img { width:100%; height:150px; object-fit:cover; }
-    button { padding:10px; border:none; background:#28a745; color:white; cursor:pointer; border-radius:5px; }
-    button:hover { background:#218838; }
-    #cart { position:fixed; right:0; top:0; width:250px; height:100%; background:#fff; border-left:2px solid #ddd; padding:10px; overflow:auto; }
+    body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f5f5;}
+    header { background:#111; color:#fff; padding:15px; text-align:center;}
+    header nav button { margin: 0 5px; padding:8px 12px; cursor:pointer; }
+    .page { padding:20px; }
+    .products { display:flex; flex-wrap:wrap; gap:15px; justify-content:center; }
+    .product-card { background:#fff; padding:10px; border-radius:8px; width:200px; text-align:center; box-shadow:0 0 5px rgba(0,0,0,0.2);}
+    .product-card img { width:100%; height:150px; object-fit:cover; border-radius:5px; }
+    button.add-cart { background:#28a745; color:#fff; border:none; padding:8px; margin-top:5px; cursor:pointer; border-radius:5px;}
+    #cart-items div { background:#fff; margin:5px 0; padding:10px; border-radius:5px; }
+    input, textarea, select { width:100%; padding:8px; margin:5px 0; border-radius:5px; border:1px solid #ccc; }
+    button[type="submit"] { background:#007bff; color:#fff; border:none; padding:10px; cursor:pointer; border-radius:5px; }
   </style>
 </head>
-<body><header>
-  <h1>My E-Commerce Store</h1>
-</header><div class="container" id="product-list"></div><div id="cart">
-  <h2>Cart</h2>
-  <ul id="cart-items"></ul>
-  <h3>Total: $<span id="total">0</span></h3>
-</div><script>
-  const products = [
-    {id:1, name:"T-Shirt", price:10, img:"https://via.placeholder.com/200"},
-    {id:2, name:"Shoes", price:30, img:"https://via.placeholder.com/200"},
-    {id:3, name:"Watch", price:50, img:"https://via.placeholder.com/200"},
-    {id:4, name:"Cap", price:8, img:"https://via.placeholder.com/200"}
-  ];
+<body>
+  <header>
+    <h1>Martles</h1>
+    <nav>
+      <button onclick="showPage('home')">Home</button>
+      <button onclick="showPage('cart')">Cart (<span id="cart-count">0</span>)</button>
+      <button onclick="showPage('account')">Account</button>
+    </nav>
+  </header>
 
-  const cart = [];
+  <!-- Home Page -->
+  <section id="home" class="page">
+    <div class="products" id="products"></div>
+  </section>
 
-  function displayProducts(){
-    const list = document.getElementById("product-list");
-    products.forEach(p => {
-      const div = document.createElement("div");
-      div.className = "product";
-      div.innerHTML = `
-        <img src="${p.img}">
-        <h3>${p.name}</h3>
-        <p>$${p.price}</p>
-        <button onclick="addToCart(${p.id})">Add to Cart</button>
+  <!-- Cart Page -->
+  <section id="cart" class="page" style="display:none;">
+    <h2>Cart</h2>
+    <div id="cart-items"></div>
+    <h3>Total: $<span id="total">0</span></h3>
+    <h3>Delivery Details</h3>
+    <form id="checkout-form">
+      <input type="text" placeholder="Full Name" required id="name">
+      <input type="tel" placeholder="Phone" required id="phone">
+      <input type="email" placeholder="Email" required id="email">
+      <textarea placeholder="Full Address" required id="address"></textarea>
+      <h4>Payment Method</h4>
+      <select id="payment">
+        <option value="bkash">Bkash</option>
+        <option value="nagad">Nagad</option>
+        <option value="cod">Cash on Delivery</option>
+      </select>
+      <button type="submit">Place Order</button>
+    </form>
+    <div id="order-message"></div>
+  </section>
+
+  <!-- Account Page -->
+  <section id="account" class="page" style="display:none;">
+    <h2>Account</h2>
+    <form id="account-form">
+      <input type="email" placeholder="Email" id="acc-email">
+      <input type="tel" placeholder="Phone" id="acc-phone">
+      <button type="submit">Sign In / Create Account</button>
+    </form>
+    <div id="account-message"></div>
+  </section>
+
+  <script>
+    // Products Data
+    const products = [];
+    for(let i=1; i<=12; i++){
+      products.push({
+        id: i,
+        title: "Product " + i,
+        price: (i*10).toFixed(2),
+        description: "This is the description of product " + i,
+        images: [
+          `https://picsum.photos/200/150?random=${i*1}`,
+          `https://picsum.photos/200/150?random=${i*2}`,
+          `https://picsum.photos/200/150?random=${i*3}`,
+          `https://picsum.photos/200/150?random=${i*4}`
+        ]
+      });
+    }
+
+    let cart = [];
+
+    // Render products
+    function renderProducts(){
+      const container = document.getElementById('products');
+      container.innerHTML = '';
+      products.forEach(p=>{
+        const div = document.createElement('div');
+        div.className = 'product-card';
+        div.innerHTML = `
+          <h3>${p.title}</h3>
+          <img src="${p.images[0]}" alt="${p.title}">
+          <p>${p.description}</p>
+          <h4>$${p.price}</h4>
+          <button class="add-cart" onclick="addToCart(${p.id})">Add to Cart</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // Add to Cart
+    function addToCart(id){
+      const product = products.find(p=>p.id===id);
+      cart.push(product);
+      document.getElementById('cart-count').innerText = cart.length;
+      alert(`${product.title} added to cart!`);
+    }
+
+    // Show Page
+    function showPage(page){
+      document.querySelectorAll('.page').forEach(p=>p.style.display='none');
+      document.getElementById(page).style.display = 'block';
+      if(page==='cart') renderCart();
+    }
+
+    // Render Cart
+    function renderCart(){
+      const container = document.getElementById('cart-items');
+      container.innerHTML = '';
+      let total = 0;
+      cart.forEach((p,i)=>{
+        total += parseFloat(p.price);
+        const div = document.createElement('div');
+        div.innerHTML = `${p.title} - $${p.price} <button onclick="removeFromCart(${i})">Remove</button>`;
+        container.appendChild(div);
+      });
+      document.getElementById('total').innerText = total.toFixed(2);
+    }
+
+    // Remove from cart
+    function removeFromCart(index){
+      cart.splice(index,1);
+      document.getElementById('cart-count').innerText = cart.length;
+      renderCart();
+    }
+
+    // Checkout Form
+    document.getElementById('checkout-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const email = document.getElementById('email').value;
+      const address = document.getElementById('address').value;
+      const payment = document.getElementById('payment').value;
+      if(cart.length===0){ alert("Cart is empty!"); return; }
+      document.getElementById('order-message').innerHTML = `
+        <h3>Thank you ${name}! Your order has been placed.</h3>
+        <p>Total: $${cart.reduce((sum,p)=>sum+parseFloat(p.price),0).toFixed(2)}</p>
+        <p>Payment Method: ${payment}</p>
+        <p>Delivery Address: ${address}</p>
       `;
-      list.appendChild(div);
+      cart = [];
+      document.getElementById('cart-count').innerText = 0;
+      renderCart();
     });
-  }
 
-  function addToCart(id){
-    const product = products.find(p => p.id === id);
-    cart.push(product);
-    updateCart();
-  }
-
-  function updateCart(){
-    const cartItems = document.getElementById("cart-items");
-    const total = document.getElementById("total");
-    cartItems.innerHTML = "";
-    let sum = 0;
-
-    cart.forEach(item => {
-      const li = document.createElement("li");
-      li.textContent = item.name
+    // Account Form
+    document.getElementById('account-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const email = document.getElementById('acc-email').value;
+      const phone = document.getElementById('acc-phone').value;
+      document.getElementById('account-message').innerHTML = `<p>Account created/signed in with Email: ${email} & Phone: ${phone}</p>`;
+    });
+      
+    // Initial render
+    renderProducts();
+  </script>
+</body>
+</html>
