@@ -333,30 +333,37 @@ document.getElementById('checkout-form').addEventListener('submit', function(e){
   const address = document.getElementById('address').value;
   const payment = document.getElementById('payment').value;
 
-  let orderDetails = `🛒 New Order:%0A`;
-  orderDetails += `Name: ${name}%0A`;
-  orderDetails += `Phone: ${phone}%0A`;
-  orderDetails += `Address: ${address}%0A`;
-  orderDetails += `Payment: ${payment}%0A%0A`;
+  const scriptURL ="https://script.google.com/macros/s/AKfycbyE_UFEw0DHn-8BvF6ObmKlgOx0JljYFiZyD60NpfhlN6clZ_P8F6rssciVUJYvoYmn/exec";
 
-  cart.forEach(item=>{
-    orderDetails += `${item.title} x ${item.quantity} = $${item.price}%0A`;
-  });
-
-  // 👉 এখানে তোমার WhatsApp নাম্বার দাও
-  const whatsappNumber = "8801343773423";
-
-  window.open(`https://wa.me/${whatsappNumber}?text=${orderDetails}`);
-
-  showToast("Order Sent to WhatsApp!");
-
-  cart=[]; 
-  updateCart(); 
+fetch(scriptURL, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    name: name,
+    phone: phone,
+    email: document.getElementById('email').value,
+    address: address,
+    products: cart.map(i => i.title + " x" + i.quantity).join(", "),
+    total: document.getElementById('total').innerText
+  })
+})
+.then(() => {
+  showToast("✅ Order Placed Successfully!");
+  cart = [];
+  updateCart();
   document.getElementById('checkout-form').reset();
+})
+.catch(err => {
+  showToast("❌ Error! আবার চেষ্টা করো");
+  console.error(err);
 });
 
+});  // 👈 checkout-form শেষ
+
 // --- Account ---
-document.getElementById('account-form').addEventListener('submit',function(e){
+document.getElementById('account-form').addEventListener('submit', function(e){
   e.preventDefault();
   const email=document.getElementById('acc-email').value;
   const phone=document.getElementById('acc-phone').value;
