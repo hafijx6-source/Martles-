@@ -334,10 +334,8 @@ document.getElementById('checkout-form').addEventListener('submit', function(e){
   const payment = document.getElementById('payment').value;
 
   const scriptURL ="https://script.google.com/macros/s/AKfycbyE_UFEw0DHn-8BvF6ObmKlgOx0JljYFiZyD60NpfhlN6clZ_P8F6rssciVUJYvoYmn/exec";
-
 fetch(scriptURL, {
   method: "POST",
-  mode: "no-cors", // 🔥 এটা add করো
   headers: {
     "Content-Type": "application/json"
   },
@@ -350,9 +348,10 @@ fetch(scriptURL, {
     total: document.getElementById('total').innerText
   })
 })
+
 .then(() => {
   showToast("✅ Order Placed Successfully!");
-  cart = [];
+  cart = []; // 🔥 cart empty করো
   updateCart();
   document.getElementById('checkout-form').reset();
 })
@@ -360,8 +359,10 @@ fetch(scriptURL, {
   showToast("❌ Error! আবার চেষ্টা করো");
   console.error(err);
 });
+});
 
-});  // 👈 checkout-form শেষ
+// 👈 checkout-form শেষ
+
 
 // --- Account ---
 document.getElementById('account-form').addEventListener('submit', function(e){
