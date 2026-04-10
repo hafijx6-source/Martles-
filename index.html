@@ -71,8 +71,33 @@
 body { font-family: 'Poppins', sans-serif; background: #f0f2f5; color: #333; line-height: 1.5; transition: 0.3s; padding-bottom: 70px; }
 
 /* --- Header --- */
-header { background: #1a1a2e; color: #fff; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
-header h1 { font-size: 2rem; font-weight: 700; letter-spacing: 2px; color: #4ecca3; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
+header {
+  background: #fff;
+  color: #333;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: 0.3s;
+}
+
+header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #ff7a00;
+  transition: 0.3s;
+}
+
+header.shrink {
+  padding: 10px;
+}
+
+header.shrink h1 {
+  font-size: 1.3rem;
+}
 
 /* --- Bottom Navigation Bar --- */
 .navbar { position: fixed; bottom: 0; left: 0; width: 100%; background: #fff; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-around; align-items: center; padding: 10px 0; z-index: 100; transition: 0.3s; }
@@ -545,6 +570,14 @@ document.getElementById('search').addEventListener('input', function(){
 
 // --- Initial Render ---
 renderProducts(); updateCart();
+window.addEventListener("scroll", function () {
+  const header = document.querySelector("header");
+  if (window.scrollY > 50) {
+    header.classList.add("shrink");
+  } else {
+    header.classList.remove("shrink");
+  }
+});
 </script>
 </body>
 </html>
