@@ -273,7 +273,7 @@ button[type="submit"]:hover { background: #3ba278; }
 <body>
 
 <header>
-  <h1>Hafij Store</h1>
+  <h1>Martles</h1>
 </header>
 
 <!-- Pages -->
@@ -531,36 +531,8 @@ fetch(scriptURL, {
   })
 })
 
-  .then(() => {
-
-  // 📦 Order Details বানানো
-  let orderText = `🛒 *New Order Received!*%0A%0A`;
-  orderText += `👤 Name: ${name}%0A`;
-  orderText += `📞 Phone: ${phone}%0A`;
-  orderText += `📧 Email: ${document.getElementById('email').value}%0A`;
-  orderText += `📍 Address: ${address}%0A%0A`;
-
-  orderText += `📦 *Products:*%0A`;
-  cart.forEach(item => {
-    orderText += `- ${item.title} x${item.quantity}%0A`;
-  });
-
-  orderText += `%0A💰 Total: ৳${document.getElementById('total').innerText}`;
-
-  // 📲 WhatsApp link (encode করা গুরুত্বপূর্ণ)
-  const whatsappURL = `https://wa.me/8801961713740?text=${encodeURIComponent(orderText)}`;
-
-  // 🔥 WhatsApp open
-  window.open(whatsappURL, '_blank');
-
-  // 🔔 Better message
-  showToast("📲 WhatsApp খুলেছে, Send চাপলেই Order Complete");
-
-  // 🧹 Reset
-  cart = [];
-  updateCart();
-  document.getElementById('checkout-form').reset();
-})
+.then(() => {
+  showToast("✅ Order Placed Successfully!");
   cart = []; // 🔥 cart empty করো
   updateCart();
   document.getElementById('checkout-form').reset();
@@ -609,3 +581,4 @@ window.addEventListener("scroll", function () {
 </script>
 </body>
 </html>
+
