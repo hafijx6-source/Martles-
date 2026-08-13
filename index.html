@@ -1,642 +1,2452 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Hafij AI — Question & Answer</title>
-
-<meta name="description"
-content="Hafij AI - Ask questions and get AI answers">
-
-<meta name="theme-color" content="#0b1020">
-
-<style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#0b1020;
-    color:#eef2ff;
-    min-height:100vh;
-}
-
-.app{
-    max-width:900px;
-    min-height:100vh;
-    margin:auto;
-    display:flex;
-    flex-direction:column;
-}
-
-/* HEADER */
-
-header{
-    padding:20px;
-    border-bottom:1px solid #202a44;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.logo{
-    font-size:23px;
-    font-weight:800;
-}
-
-.logo span{
-    color:#7c8cff;
-}
-
-.badge{
-    font-size:12px;
-    padding:7px 10px;
-    border:1px solid #293454;
-    border-radius:50px;
-    color:#aeb9d8;
-}
-
-/* MAIN */
-
-main{
-    flex:1;
-    padding:30px 18px 130px;
-}
-
-.hero{
-    text-align:center;
-    padding:45px 10px 30px;
-}
-
-.hero h1{
-    font-size:clamp(34px,7vw,55px);
-    margin-bottom:14px;
-}
-
-.hero p{
-    color:#9eabc9;
-    line-height:1.6;
-}
-
-/* CHAT */
-
-.chat{
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-}
-
-.msg{
-    max-width:82%;
-    padding:14px 17px;
-    border-radius:18px;
-    line-height:1.6;
-    white-space:pre-wrap;
-    word-wrap:break-word;
-}
-
-.user{
-    align-self:flex-end;
-    background:#5865f2;
-}
-
-.ai{
-    align-self:flex-start;
-    background:#151d33;
-    border:1px solid #26314f;
-}
-
-.empty{
-    text-align:center;
-    color:#7785a8;
-    padding:20px;
-}
-
-/* COMPOSER */
-
-.composer{
-    position:fixed;
-    left:0;
-    right:0;
-    bottom:0;
-
-    background:rgba(11,16,32,.95);
-    backdrop-filter:blur(12px);
-
-    border-top:1px solid #202a44;
-
-    padding:14px;
-}
-
-.composer-inner{
-    max-width:900px;
-    margin:auto;
-
-    display:flex;
-    gap:10px;
-}
-
-textarea{
-    flex:1;
-
-    resize:none;
-
-    min-height:52px;
-    max-height:140px;
-
-    background:#121a2d;
-    color:white;
-
-    border:1px solid #2a3656;
-    border-radius:16px;
-
-    padding:15px;
-
-    outline:none;
-
-    font-size:15px;
-}
-
-textarea:focus{
-    border-color:#6675ff;
-}
-
-button{
-    border:0;
-    border-radius:15px;
-
-    padding:0 20px;
-
-    background:#6675ff;
-    color:white;
-
-    font-weight:700;
-
-    cursor:pointer;
-}
-
-button:hover{
-    filter:brightness(1.1);
-}
-
-button:disabled{
-    opacity:.55;
-    cursor:not-allowed;
-}
-
-.actions{
-    max-width:900px;
-    margin:10px auto 0;
-
-    display:flex;
-}
-
-.small{
-    padding:9px 13px;
-    font-size:12px;
-
-    background:#151d33;
-    border:1px solid #293454;
-}
-
-/* MOBILE */
-
-@media(max-width:600px){
-
-    main{
-        padding-left:12px;
-        padding-right:12px;
-    }
-
-    header{
-        padding:18px 14px;
-    }
-
-    .hero{
-        padding-top:30px;
-    }
-
-    .msg{
-        max-width:92%;
-    }
-
-}
-</style>
-</head>
-
-
-<body>
-
-<div class="app">
-
-    <!-- HEADER -->
-
-    <header>
-
-        <div class="logo">
-            Hafij <span>AI</span>
-        </div>
-
-        <div class="badge">
-            Question & Answer
-        </div>
-
-    </header>
-
-
-    <!-- MAIN -->
-
-    <main>
-
-        <section class="hero" id="hero">
-
-            <h1>
-                Ask anything.
-            </h1>
-
-            <p>
-                একটি প্রশ্ন লিখুন এবং AI-এর কাছ থেকে উত্তর পান।
-            </p>
-
-        </section>
-
-
-        <section class="chat" id="chat">
-
-            <div class="empty" id="empty">
-                আপনার প্রথম প্রশ্নটি লিখুন 👇
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- INPUT -->
-
-    <div class="composer">
-
-        <div class="composer-inner">
-
-            <textarea
-                id="question"
-                placeholder="আপনার প্রশ্ন লিখুন..."
-                rows="1">
-            </textarea>
-
-            <button id="send">
-                Ask
-            </button>
-
-        </div>
-
-
-        <div class="actions">
-
-            <button
-                class="small"
-                id="clear">
-
-                Clear Chat
-
-            </button>
-
-        </div>
-
-    </div>
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Hafij Store Pro</title>  
+<meta name="description" content="Hafij Store Pro - Modern E-Commerce Store">  
+<meta name="theme-color" content="#ff6b00">  <style>  
+/* =========================================================  
+   RESET  
+========================================================= */  
+*{  
+    margin:0;  
+    padding:0;  
+    box-sizing:border-box;  
+}  
+  
+html{  
+    scroll-behavior:smooth;  
+}  
+  
+body{  
+    font-family:Arial,Helvetica,sans-serif;  
+    background:#f5f6f8;  
+    color:#222;  
+    padding-bottom:75px;  
+}  
+  
+button,  
+input,  
+select,  
+textarea{  
+    font:inherit;  
+}  
+  
+button{  
+    cursor:pointer;  
+    border:0;  
+}  
+  
+/* =========================================================  
+   VARIABLES  
+========================================================= */  
+:root{  
+    --primary:#ff6b00;  
+    --primary-dark:#e85d00;  
+    --dark:#111827;  
+    --text:#222;  
+    --muted:#6b7280;  
+    --white:#fff;  
+    --border:#e5e7eb;  
+    --success:#16a34a;  
+    --danger:#dc2626;  
+    --container:1200px;  
+}  
+  
+/* =========================================================  
+   HEADER  
+========================================================= */  
+.top-header{  
+    background:#111827;  
+    color:#fff;  
+    padding:8px 16px;  
+    font-size:13px;  
+}  
+  
+.top-header-inner{  
+    max-width:var(--container);  
+    margin:auto;  
+    display:flex;  
+    justify-content:space-between;  
+    gap:15px;  
+}  
+  
+.header{  
+    background:#fff;  
+    position:sticky;  
+    top:0;  
+    z-index:1000;  
+    box-shadow:0 2px 10px rgba(0,0,0,.08);  
+}  
+  
+.header-inner{  
+    max-width:var(--container);  
+    margin:auto;  
+    min-height:70px;  
+    display:flex;  
+    align-items:center;  
+    gap:20px;  
+    padding:10px 16px;  
+}  
+  
+.logo{  
+    font-size:24px;  
+    font-weight:900;  
+    color:var(--primary);  
+    white-space:nowrap;  
+}  
+  
+.logo span{  
+    color:#111827;  
+}  
+  
+.search-box{  
+    flex:1;  
+    display:flex;  
+    height:44px;  
+}  
+  
+.search-box input{  
+    flex:1;  
+    border:1px solid var(--border);  
+    border-right:0;  
+    border-radius:8px 0 0 8px;  
+    padding:0 15px;  
+    outline:none;  
+}  
+  
+.search-box button{  
+    width:55px;  
+    background:var(--primary);  
+    color:white;  
+    border-radius:0 8px 8px 0;  
+}  
+  
+.header-actions{  
+    display:flex;  
+    align-items:center;  
+    gap:10px;  
+}  
+  
+.icon-btn{  
+    width:42px;  
+    height:42px;  
+    border-radius:50%;  
+    background:#f3f4f6;  
+    position:relative;  
+    font-size:18px;  
+}  
+  
+.badge-count{  
+    position:absolute;  
+    top:-4px;  
+    right:-3px;  
+    min-width:18px;  
+    height:18px;  
+    border-radius:20px;  
+    background:#ef4444;  
+    color:white;  
+    font-size:11px;  
+    display:flex;  
+    align-items:center;  
+    justify-content:center;  
+}  
+  
+/* =========================================================  
+   NAV  
+========================================================= */  
+.desktop-nav{  
+    border-top:1px solid #f1f1f1;  
+    background:#fff;  
+}  
+  
+.desktop-nav-inner{  
+    max-width:var(--container);  
+    margin:auto;  
+    display:flex;  
+    gap:25px;  
+    padding:12px 16px;  
+}  
+  
+.desktop-nav button{  
+    background:none;  
+    color:#374151;  
+    font-weight:600;  
+}  
+  
+.desktop-nav button:hover{  
+    color:var(--primary);  
+}  
+  
+/* =========================================================  
+   HERO  
+========================================================= */  
+.hero{  
+    max-width:var(--container);  
+    margin:22px auto;  
+    padding:0 16px;  
+}  
+  
+.hero-card{  
+    min-height:360px;  
+    border-radius:18px;  
+    overflow:hidden;  
+    background:  
+      linear-gradient(90deg,rgba(17,24,39,.94),rgba(17,24,39,.45)),  
+      url("https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=1600&q=80")  
+      center/cover;  
+    display:flex;  
+    align-items:center;  
+    padding:50px;  
+    color:#fff;  
+}  
+  
+.hero-content{  
+    max-width:600px;  
+}  
+  
+.hero-content .small{  
+    color:#ffb47a;  
+    font-weight:bold;  
+    margin-bottom:10px;  
+}  
+  
+.hero-content h1{  
+    font-size:48px;  
+    line-height:1.05;  
+    margin-bottom:15px;  
+}  
+  
+.hero-content p{  
+    color:#e5e7eb;  
+    line-height:1.6;  
+    margin-bottom:25px;  
+}  
+  
+.primary-btn{  
+    background:var(--primary);  
+    color:#fff;  
+    padding:13px 22px;  
+    border-radius:8px;  
+    font-weight:bold;  
+}  
+  
+.primary-btn:hover{  
+    background:var(--primary-dark);  
+}  
+  
+/* =========================================================  
+   SECTIONS  
+========================================================= */  
+.section{  
+    max-width:var(--container);  
+    margin:35px auto;  
+    padding:0 16px;  
+}  
+  
+.section-header{  
+    display:flex;  
+    align-items:center;  
+    justify-content:space-between;  
+    margin-bottom:18px;  
+}  
+  
+.section-header h2{  
+    font-size:25px;  
+}  
+  
+.view-all{  
+    color:var(--primary);  
+    font-weight:bold;  
+    background:none;  
+}  
+  
+/* =========================================================  
+   CATEGORIES  
+========================================================= */  
+.categories{  
+    display:grid;  
+    grid-template-columns:repeat(6,1fr);  
+    gap:14px;  
+}  
+  
+.category-card{  
+    background:#fff;  
+    border:1px solid var(--border);  
+    border-radius:12px;  
+    padding:18px 10px;  
+    text-align:center;  
+    transition:.2s;  
+}  
+  
+.category-card:hover{  
+    transform:translateY(-3px);  
+    box-shadow:0 8px 20px rgba(0,0,0,.07);  
+}  
+  
+.category-icon{  
+    font-size:34px;  
+    margin-bottom:8px;  
+}  
+  
+.category-card h3{  
+    font-size:14px;  
+}  
+  
+/* =========================================================  
+   PRODUCTS  
+========================================================= */  
+.products-grid{  
+    display:grid;  
+    grid-template-columns:repeat(4,1fr);  
+    gap:18px;  
+}  
+  
+.product-card{  
+    background:#fff;  
+    border-radius:13px;  
+    overflow:hidden;  
+    border:1px solid var(--border);  
+    transition:.2s;  
+    position:relative;  
+}  
+  
+.product-card:hover{  
+    transform:translateY(-4px);  
+    box-shadow:0 10px 25px rgba(0,0,0,.08);  
+}  
+  
+.product-image{  
+    height:220px;  
+    position:relative;  
+    background:#f3f4f6;  
+    overflow:hidden;  
+}  
+  
+.product-image img{  
+    width:100%;  
+    height:100%;  
+    object-fit:cover;  
+    transition:.3s;  
+}  
+  
+.product-card:hover .product-image img{  
+    transform:scale(1.05);  
+}  
+  
+.product-badge{  
+    position:absolute;  
+    top:10px;  
+    left:10px;  
+    background:var(--primary);  
+    color:#fff;  
+    padding:5px 8px;  
+    border-radius:5px;  
+    font-size:11px;  
+    font-weight:bold;  
+}  
+  
+.wishlist-btn{  
+    position:absolute;  
+    top:10px;  
+    right:10px;  
+    width:34px;  
+    height:34px;  
+    border-radius:50%;  
+    background:#fff;  
+    box-shadow:0 3px 10px rgba(0,0,0,.12);  
+    font-size:17px;  
+}  
+  
+.wishlist-btn.active{  
+    color:#ef4444;  
+}  
+  
+.product-info{  
+    padding:14px;  
+}  
+  
+.product-category{  
+    font-size:11px;  
+    color:var(--muted);  
+    margin-bottom:5px;  
+}  
+  
+.product-title{  
+    font-size:16px;  
+    font-weight:bold;  
+    line-height:1.35;  
+    min-height:42px;  
+}  
+  
+.rating{  
+    color:#f59e0b;  
+    margin:7px 0;  
+    font-size:13px;  
+}  
+  
+.price-row{  
+    display:flex;  
+    align-items:center;  
+    gap:8px;  
+    margin-bottom:12px;  
+}  
+  
+.price{  
+    font-size:20px;  
+    color:var(--primary);  
+    font-weight:900;  
+}  
+  
+.old-price{  
+    color:#9ca3af;  
+    text-decoration:line-through;  
+    font-size:13px;  
+}  
+  
+.add-cart{  
+    width:100%;  
+    background:#111827;  
+    color:#fff;  
+    padding:10px;  
+    border-radius:7px;  
+    font-weight:bold;  
+}  
+  
+.add-cart:hover{  
+    background:var(--primary);  
+}  
+  
+/* =========================================================  
+   PRODUCT MODAL  
+========================================================= */  
+.modal{  
+    position:fixed;  
+    inset:0;  
+    background:rgba(0,0,0,.65);  
+    z-index:3000;  
+    display:none;  
+    align-items:center;  
+    justify-content:center;  
+    padding:15px;  
+}  
+  
+.modal.show{  
+    display:flex;  
+}  
+  
+.modal-box{  
+    background:#fff;  
+    width:min(900px,100%);  
+    max-height:92vh;  
+    overflow:auto;  
+    border-radius:15px;  
+    position:relative;  
+}  
+  
+.close-btn{  
+    position:absolute;  
+    right:14px;  
+    top:14px;  
+    width:38px;  
+    height:38px;  
+    border-radius:50%;  
+    background:#f3f4f6;  
+    z-index:2;  
+    font-size:20px;  
+}  
+  
+.product-detail{  
+    display:grid;  
+    grid-template-columns:1fr 1fr;  
+    gap:30px;  
+    padding:30px;  
+}  
+  
+.detail-image{  
+    height:420px;  
+    border-radius:12px;  
+    overflow:hidden;  
+    background:#f3f4f6;  
+}  
+  
+.detail-image img{  
+    width:100%;  
+    height:100%;  
+    object-fit:cover;  
+}  
+  
+.detail-content{  
+    padding:20px 10px;  
+}  
+  
+.detail-content h2{  
+    font-size:30px;  
+    margin-bottom:10px;  
+}  
+  
+.detail-description{  
+    color:#6b7280;  
+    line-height:1.7;  
+    margin:15px 0;  
+}  
+  
+.detail-price{  
+    font-size:30px;  
+    color:var(--primary);  
+    font-weight:900;  
+    margin:15px 0;  
+}  
+  
+.quantity{  
+    display:flex;  
+    align-items:center;  
+    gap:0;  
+    margin:15px 0;  
+}  
+  
+.quantity button{  
+    width:38px;  
+    height:38px;  
+    background:#e5e7eb;  
+    font-size:20px;  
+}  
+  
+.quantity input{  
+    width:55px;  
+    height:38px;  
+    text-align:center;  
+    border:1px solid #ddd;  
+}  
+  
+/* =========================================================  
+   PAGE PANELS  
+========================================================= */  
+.page-panel{  
+    max-width:var(--container);  
+    margin:30px auto;  
+    padding:0 16px;  
+    display:none;  
+}  
+  
+.page-panel.active{  
+    display:block;  
+}  
+  
+.panel-header{  
+    display:flex;  
+    align-items:center;  
+    justify-content:space-between;  
+    margin-bottom:20px;  
+}  
+  
+.panel-header h2{  
+    font-size:28px;  
+}  
+  
+/* =========================================================  
+   CART  
+========================================================= */  
+.cart-layout{  
+    display:grid;  
+    grid-template-columns:1.6fr 1fr;  
+    gap:20px;  
+}  
+  
+.cart-list,  
+.summary-card,  
+.account-card,  
+.checkout-card{  
+    background:#fff;  
+    border:1px solid var(--border);  
+    border-radius:12px;  
+    padding:20px;  
+}  
+  
+.cart-item{  
+    display:grid;  
+    grid-template-columns:90px 1fr auto;  
+    gap:15px;  
+    align-items:center;  
+    padding:14px 0;  
+    border-bottom:1px solid var(--border);  
+}  
+  
+.cart-item:last-child{  
+    border-bottom:0;  
+}  
+  
+.cart-item img{  
+    width:90px;  
+    height:90px;  
+    object-fit:cover;  
+    border-radius:8px;  
+}  
+  
+.cart-item h3{  
+    font-size:16px;  
+    margin-bottom:8px;  
+}  
+  
+.cart-price{  
+    color:var(--primary);  
+    font-weight:bold;  
+}  
+  
+.remove-btn{  
+    background:#fee2e2;  
+    color:#dc2626;  
+    padding:7px 10px;  
+    border-radius:6px;  
+}  
+  
+.mini-qty{  
+    display:flex;  
+    margin-top:8px;  
+}  
+  
+.mini-qty button{  
+    width:28px;  
+    height:28px;  
+    background:#eee;  
+}  
+  
+.mini-qty span{  
+    width:35px;  
+    height:28px;  
+    display:flex;  
+    align-items:center;  
+    justify-content:center;  
+    border:1px solid #eee;  
+}  
+  
+.summary-card h3{  
+    font-size:20px;  
+    margin-bottom:18px;  
+}  
+  
+.summary-row{  
+    display:flex;  
+    justify-content:space-between;  
+    padding:9px 0;  
+}  
+  
+.summary-total{  
+    border-top:1px solid var(--border);  
+    margin-top:8px;  
+    padding-top:15px;  
+    font-size:20px;  
+    font-weight:bold;  
+}  
+  
+.checkout-btn{  
+    width:100%;  
+    background:var(--primary);  
+    color:#fff;  
+    padding:13px;  
+    border-radius:8px;  
+    margin-top:15px;  
+    font-weight:bold;  
+}  
+  
+/* =========================================================  
+   FORMS  
+========================================================= */  
+.form-grid{  
+    display:grid;  
+    grid-template-columns:1fr 1fr;  
+    gap:15px;  
+}  
+  
+.form-group{  
+    margin-bottom:15px;  
+}  
+  
+.form-group.full{  
+    grid-column:1/-1;  
+}  
+  
+.form-group label{  
+    display:block;  
+    margin-bottom:6px;  
+    font-weight:bold;  
+    font-size:14px;  
+}  
+  
+.form-group input,  
+.form-group select,  
+.form-group textarea{  
+    width:100%;  
+    padding:12px;  
+    border:1px solid #d1d5db;  
+    border-radius:7px;  
+    outline:none;  
+}  
+  
+.form-group textarea{  
+    min-height:100px;  
+    resize:vertical;  
+}  
+  
+.payment-method{  
+    display:grid;  
+    grid-template-columns:repeat(3,1fr);  
+    gap:10px;  
+    margin:15px 0;  
+}  
+  
+.payment-option{  
+    border:1px solid #ddd;  
+    border-radius:8px;  
+    padding:13px;  
+    text-align:center;  
+    cursor:pointer;  
+}  
+  
+.payment-option.selected{  
+    border:2px solid var(--primary);  
+    background:#fff7ed;  
+}  
+  
+.payment-option input{  
+    display:none;  
+}  
+  
+/* =========================================================  
+   ACCOUNT  
+========================================================= */  
+.account-grid{  
+    display:grid;  
+    grid-template-columns:1fr 1fr;  
+    gap:20px;  
+}  
+  
+.account-card h3{  
+    margin-bottom:15px;  
+}  
+  
+.account-icon{  
+    font-size:60px;  
+    text-align:center;  
+    margin:15px;  
+}  
+  
+.empty{  
+    padding:50px 20px;  
+    text-align:center;  
+    color:#6b7280;  
+}  
+  
+.empty-icon{  
+    font-size:55px;  
+    margin-bottom:12px;  
+}  
+  
+/* =========================================================  
+   FOOTER  
+========================================================= */  
+.footer{  
+    background:#111827;  
+    color:#fff;  
+    margin-top:50px;  
+    padding:45px 16px 25px;  
+}  
+  
+.footer-grid{  
+    max-width:var(--container);  
+    margin:auto;  
+    display:grid;  
+    grid-template-columns:2fr 1fr 1fr 1fr;  
+    gap:30px;  
+}  
+  
+.footer h3{  
+    margin-bottom:15px;  
+}  
+  
+.footer p,  
+.footer li{  
+    color:#cbd5e1;  
+    line-height:1.8;  
+    font-size:14px;  
+}  
+  
+.footer ul{  
+    list-style:none;  
+}  
+  
+.footer-bottom{  
+    max-width:var(--container);  
+    margin:30px auto 0;  
+    padding-top:20px;  
+    border-top:1px solid #374151;  
+    text-align:center;  
+    color:#9ca3af;  
+    font-size:13px;  
+}  
+  
+/* =========================================================  
+   MOBILE NAV  
+========================================================= */  
+.mobile-nav{  
+    display:none;  
+    position:fixed;  
+    bottom:0;  
+    left:0;  
+    right:0;  
+    height:65px;  
+    background:#fff;  
+    border-top:1px solid #ddd;  
+    z-index:2000;  
+    grid-template-columns:repeat(5,1fr);  
+}  
+  
+.mobile-nav button{  
+    background:#fff;  
+    color:#6b7280;  
+    font-size:11px;  
+}  
+  
+.mobile-nav button div{  
+    font-size:21px;  
+    margin-bottom:2px;  
+}  
+  
+.mobile-nav button.active{  
+    color:var(--primary);  
+}  
+  
+/* =========================================================  
+   TOAST  
+========================================================= */  
+.toast{  
+    position:fixed;  
+    left:50%;  
+    bottom:90px;  
+    transform:translateX(-50%) translateY(20px);  
+    background:#111827;  
+    color:#fff;  
+    padding:12px 18px;  
+    border-radius:8px;  
+    opacity:0;  
+    pointer-events:none;  
+    transition:.3s;  
+    z-index:5000;  
+}  
+  
+.toast.show{  
+    opacity:1;  
+    transform:translateX(-50%) translateY(0);  
+}  
+  
+/* =========================================================  
+   RESPONSIVE  
+========================================================= */  
+@media(max-width:900px){  
+    .products-grid{  
+        grid-template-columns:repeat(3,1fr);  
+    }  
+  
+    .categories{  
+        grid-template-columns:repeat(3,1fr);  
+    }  
+  
+    .cart-layout,  
+    .account-grid{  
+        grid-template-columns:1fr;  
+    }  
+  
+    .footer-grid{  
+        grid-template-columns:1fr 1fr;  
+    }  
+}  
+  
+@media(max-width:650px){  
+  
+    body{  
+        padding-bottom:70px;  
+    }  
+  
+    .top-header{  
+        display:none;  
+    }  
+  
+    .header-inner{  
+        min-height:62px;  
+        gap:8px;  
+    }  
+  
+    .logo{  
+        font-size:20px;  
+    }  
+  
+    .search-box{  
+        order:3;  
+        width:100%;  
+        flex-basis:100%;  
+    }  
+  
+    .header-inner{  
+        flex-wrap:wrap;  
+    }  
+  
+    .header-actions{  
+        margin-left:auto;  
+    }  
+  
+    .header-actions .icon-btn:first-child{  
+        display:none;  
+    }  
+  
+    .desktop-nav{  
+        display:none;  
+    }  
+  
+    .hero{  
+        margin-top:15px;  
+    }  
+  
+    .hero-card{  
+        min-height:350px;  
+        padding:30px 22px;  
+    }  
+  
+    .hero-content h1{  
+        font-size:35px;  
+    }  
+  
+    .products-grid{  
+        grid-template-columns:repeat(2,1fr);  
+        gap:10px;  
+    }  
+  
+    .product-image{  
+        height:170px;  
+    }  
+  
+    .product-info{  
+        padding:10px;  
+    }  
+  
+    .product-title{  
+        font-size:14px;  
+    }  
+  
+    .price{  
+        font-size:17px;  
+    }  
+  
+    .categories{  
+        grid-template-columns:repeat(3,1fr);  
+        gap:8px;  
+    }  
+  
+    .category-card{  
+        padding:12px 5px;  
+    }  
+  
+    .category-icon{  
+        font-size:27px;  
+    }  
+  
+    .product-detail{  
+        grid-template-columns:1fr;  
+        gap:10px;  
+        padding:18px;  
+    }  
+  
+    .detail-image{  
+        height:300px;  
+    }  
+  
+    .detail-content{  
+        padding:10px 0;  
+    }  
+  
+    .detail-content h2{  
+        font-size:24px;  
+    }  
+  
+    .form-grid{  
+        grid-template-columns:1fr;  
+    }  
+  
+    .form-group.full{  
+        grid-column:auto;  
+    }  
+  
+    .payment-method{  
+        grid-template-columns:1fr;  
+    }  
+  
+    .footer-grid{  
+        grid-template-columns:1fr;  
+    }  
+  
+    .mobile-nav{  
+        display:grid;  
+    }  
+  
+    .section{  
+        margin:25px auto;  
+    }  
+  
+    .cart-item{  
+        grid-template-columns:70px 1fr;  
+    }  
+  
+    .cart-item img{  
+        width:70px;  
+        height:70px;  
+    }  
+  
+    .cart-item .remove-btn{  
+        grid-column:2;  
+        justify-self:start;  
+    }  
+}  
+</style>  </head>  <body>  <!-- =====================================================  
+     TOP HEADER  
+===================================================== -->  <div class="top-header">  
+    <div class="top-header-inner">  
+        <span>Welcome to Hafij Store Pro</span>  
+        <span>Fast Delivery • Secure Shopping • Easy Returns</span>  
+    </div>  
+</div>  <!-- =====================================================  
+     HEADER  
+===================================================== -->  <header class="header">  
+    <div class="header-inner">  <button class="logo" onclick="showHome()">  
+        Hafij<span>Store</span>  
+    </button>  
+
+    <div class="search-box">  
+        <input  
+            id="searchInput"  
+            type="search"  
+            placeholder="Search products..."  
+            oninput="searchProducts(this.value)"  
+        >  
+        <button onclick="searchProducts(document.getElementById('searchInput').value)">  
+            🔍  
+        </button>  
+    </div>  
+
+    <div class="header-actions">  
+        <button class="icon-btn" onclick="showWishlist()">  
+            ❤️  
+            <span class="badge-count" id="wishlistCount">0</span>  
+        </button>  
+
+        <button class="icon-btn" onclick="showCart()">  
+            🛒  
+            <span class="badge-count" id="cartCount">0</span>  
+        </button>  
+
+        <button class="icon-btn" onclick="showAccount()">  
+            👤  
+        </button>  
+    </div>  
 
 </div>
 
+</header>  <!-- =====================================================  
+     DESKTOP NAV  
+===================================================== -->  <nav class="desktop-nav">  
+    <div class="desktop-nav-inner">  
+        <button onclick="showHome()">Home</button>  
+        <button onclick="filterCategory('All')">All Products</button>  
+        <button onclick="filterCategory('Electronics')">Electronics</button>  
+        <button onclick="filterCategory('Fashion')">Fashion</button>  
+        <button onclick="filterCategory('Shoes')">Shoes</button>  
+        <button onclick="filterCategory('Beauty')">Beauty</button>  
+        <button onclick="filterCategory('Home')">Home & Living</button>  
+    </div>  
+</nav>  <!-- =====================================================  
+     HOME  
+===================================================== -->  <main id="homePage">  <section class="hero">  
+    <div class="hero-card">  
+        <div class="hero-content">  
+            <div class="small">BIG SUMMER SALE</div>  
+            <h1>Shop Smart.<br>Live Better.</h1>  
+            <p>  
+                Discover amazing products at great prices.  
+                Quality products, secure checkout and fast delivery.  
+            </p>  
+            <button class="primary-btn" onclick="scrollToProducts()">  
+                Shop Now →  
+            </button>  
+        </div>  
+    </div>  
+</section>  <section class="section">  
+    <div class="section-header">  
+        <h2>Shop by Category</h2>  
+    </div>  <div class="categories">  
+
+    <button class="category-card" onclick="filterCategory('Electronics')">  
+        <div class="category-icon">📱</div>  
+        <h3>Electronics</h3>  
+    </button>  
+
+    <button class="category-card" onclick="filterCategory('Fashion')">  
+        <div class="category-icon">👕</div>  
+        <h3>Fashion</h3>  
+    </button>  
+
+    <button class="category-card" onclick="filterCategory('Shoes')">  
+        <div class="category-icon">👟</div>  
+        <h3>Shoes</h3>  
+    </button>  
+
+    <button class="category-card" onclick="filterCategory('Beauty')">  
+        <div class="category-icon">💄</div>  
+        <h3>Beauty</h3>  
+    </button>  
+
+    <button class="category-card" onclick="filterCategory('Home')">  
+        <div class="category-icon">🏠</div>  
+        <h3>Home</h3>  
+    </button>  
+
+    <button class="category-card" onclick="filterCategory('Accessories')">  
+        <div class="category-icon">🎧</div>  
+        <h3>Accessories</h3>  
+    </button>  
+
+</div>
+
+</section>  <section class="section" id="productsSection">  <div class="section-header">  
+    <h2 id="productsTitle">Popular Products</h2>  
+    <button class="view-all" onclick="filterCategory('All')">  
+        View All  
+    </button>  
+</div>  
+
+<div class="products-grid" id="productsGrid"></div>
+
+</section>  </main>  <!-- =====================================================  
+     CART PAGE  
+===================================================== -->  <section class="page-panel" id="cartPage">  <div class="panel-header">  
+    <h2>Shopping Cart</h2>  
+    <button class="view-all" onclick="showHome()">← Continue Shopping</button>  
+</div>  
+
+<div class="cart-layout">  
+
+    <div class="cart-list" id="cartList"></div>  
+
+    <div class="summary-card">  
+        <h3>Order Summary</h3>  
+
+        <div class="summary-row">  
+            <span>Subtotal</span>  
+            <strong id="subtotal">৳0</strong>  
+        </div>  
+
+        <div class="summary-row">  
+            <span>Delivery</span>  
+            <strong id="delivery">৳0</strong>  
+        </div>  
+
+        <div class="summary-row summary-total">  
+            <span>Total</span>  
+            <strong id="cartTotal">৳0</strong>  
+        </div>  
 
+        <button class="checkout-btn" onclick="showCheckout()">  
+            Proceed to Checkout  
+        </button>  
+    </div>  
 
-<script>
+</div>
+
+</section>  <!-- =====================================================  
+     WISHLIST PAGE  
+===================================================== -->  <section class="page-panel" id="wishlistPage">  <div class="panel-header">  
+    <h2>My Wishlist ❤️</h2>  
+    <button class="view-all" onclick="showHome()">← Home</button>  
+</div>  
 
-/* =====================================================
-   AI API
-===================================================== */
+<div class="products-grid" id="wishlistGrid"></div>
 
+</section>  <!-- =====================================================  
+     ACCOUNT PAGE  
+===================================================== -->  <section class="page-panel" id="accountPage">  <div class="panel-header">  
+    <h2>My Account</h2>  
+</div>  
 
-/*
-   IMPORTANT:
+<div class="account-grid">  
 
-   GitHub Pages-এ সরাসরি AI API key রাখবেন না।
+    <div class="account-card">  
+        <div class="account-icon">👤</div>  
+        <h3>Customer Account</h3>  
 
-   আপনার secure backend/API URL এখানে বসাবেন।
+        <div class="form-group">  
+            <label>Name</label>  
+            <input id="accountName" placeholder="Your name">  
+        </div>  
 
-   Example:
+        <div class="form-group">  
+            <label>Phone</label>  
+            <input id="accountPhone" placeholder="01XXXXXXXXX">  
+        </div>  
 
-   const API_URL =
-   "https://your-backend.example.com/ask";
+        <div class="form-group">  
+            <label>Email</label>  
+            <input id="accountEmail" type="email" placeholder="you@example.com">  
+        </div>  
 
-*/
+        <button class="primary-btn" onclick="saveAccount()">  
+            Save Information  
+        </button>  
+    </div>  
 
-const API_URL = "";
+    <div class="account-card">  
+        <h3>Quick Links</h3>  
 
+        <button class="checkout-btn" onclick="showCart()">  
+            🛒 My Cart  
+        </button>  
 
+        <button class="checkout-btn" onclick="showWishlist()">  
+            ❤️ My Wishlist  
+        </button>  
 
-/* =====================================================
-   ELEMENTS
-===================================================== */
+        <button class="checkout-btn" onclick="showCheckout()">  
+            📦 Checkout  
+        </button>  
 
-const question =
-    document.getElementById("question");
+    </div>  
 
-const send =
-    document.getElementById("send");
+</div>
 
-const clear =
-    document.getElementById("clear");
+</section>  <!-- =====================================================  
+     CHECKOUT PAGE  
+===================================================== -->  <section class="page-panel" id="checkoutPage">  <div class="panel-header">  
+    <h2>Checkout</h2>  
+    <button class="view-all" onclick="showCart()">← Back to Cart</button>  
+</div>  
 
-const chat =
-    document.getElementById("chat");
+<div class="cart-layout">  
+
+    <div class="checkout-card">  
 
-const hero =
-    document.getElementById("hero");
-
-const empty =
-    document.getElementById("empty");
-
-
-
-/* =====================================================
-   ADD MESSAGE
-===================================================== */
-
-function addMessage(text,type){
-
-    if(document.getElementById("empty")){
-        document.getElementById("empty").remove();
-    }
-
-    hero.style.display="none";
-
-
-    const div =
-        document.createElement("div");
-
-    div.className =
-        "msg " + type;
-
-    div.textContent =
-        text;
-
-
-    chat.appendChild(div);
-
-
-    window.scrollTo({
-        top:document.body.scrollHeight,
-        behavior:"smooth"
-    });
-
-}
-
-
-
-/* =====================================================
-   AI REQUEST
-===================================================== */
-
-async function askAI(q){
-
-    /*
-       API না থাকলে demo message
-    */
-
-    if(!API_URL){
-
-        return `
-Demo Mode
-
-আপনার প্রশ্ন:
-
-${q}
-
-AI API এখনো যুক্ত করা হয়নি।
-
-GitHub Pages-এ API key সরাসরি রাখা নিরাপদ নয়।
-একটি secure backend API যুক্ত করলে এখানে
-সত্যিকারের AI উত্তর আসবে।
-        `;
-
-    }
-
-
-    const response =
-        await fetch(API_URL,{
-
-            method:"POST",
-
-            headers:{
-                "Content-Type":
-                "application/json"
-            },
-
-            body:JSON.stringify({
-
-                question:q
-
-            })
-
-        });
-
-
-    if(!response.ok){
-
-        throw new Error(
-            "API request failed"
-        );
-
-    }
-
-
-    const data =
-        await response.json();
-
-
-    return data.answer ||
-        "কোনো উত্তর পাওয়া যায়নি।";
-
-}
-
-
-
-/* =====================================================
-   SEND QUESTION
-===================================================== */
-
-async function sendQuestion(){
-
-    const q =
-        question.value.trim();
-
-
-    if(!q || send.disabled){
-
-        return;
-
-    }
-
-
-    /* User message */
-
-    addMessage(
-        q,
-        "user"
-    );
-
-
-    question.value="";
-
-
-    send.disabled=true;
-
-    send.textContent="...";
-
-
-    /* Loading */
-
-    const loading =
-        document.createElement("div");
-
-    loading.className="msg ai";
-
-    loading.textContent=
-        "উত্তর তৈরি হচ্ছে...";
-
-
-    chat.appendChild(loading);
-
-
-    try{
-
-        const answer =
-            await askAI(q);
-
-
-        loading.remove();
-
-
-        addMessage(
-            answer,
-            "ai"
-        );
-
-    }
-
-    catch(error){
-
-        loading.textContent=
-            "দুঃখিত, AI server-এর সাথে যোগাযোগ করা যাচ্ছে না।";
-
-        console.error(error);
-
-    }
-
-    finally{
-
-        send.disabled=false;
-
-        send.textContent="Ask";
-
-        question.focus();
-
-    }
-
-}
-
-
-
-/* =====================================================
-   SEND BUTTON
-===================================================== */
-
-send.addEventListener(
-    "click",
-    sendQuestion
-);
-
-
-
-/* =====================================================
-   ENTER KEY
-===================================================== */
-
-question.addEventListener(
-    "keydown",
-    function(e){
-
-        if(
-            e.key==="Enter" &&
-            !e.shiftKey
-        ){
-
-            e.preventDefault();
-
-            sendQuestion();
-
-        }
-
-    }
-);
-
-
-
-/* =====================================================
-   AUTO TEXTAREA HEIGHT
-===================================================== */
-
-question.addEventListener(
-    "input",
-    function(){
-
-        question.style.height="auto";
-
-        question.style.height =
-            Math.min(
-                question.scrollHeight,
-                140
-            ) + "px";
-
-    }
-);
-
-
-
-/* =====================================================
-   CLEAR CHAT
-===================================================== */
-
-clear.addEventListener(
-    "click",
-    function(){
-
-        chat.innerHTML = `
-
-            <div
-                class="empty"
-                id="empty">
-
-                আপনার প্রথম প্রশ্নটি লিখুন 👇
-
-            </div>
-
-        `;
-
-
-        hero.style.display="";
-
-
-        question.focus();
-
-    }
-);
-
-</script>
-
-</body>
-</html>
+        <h3>Delivery Information</h3>  
+
+        <div class="form-grid">  
+
+            <div class="form-group">  
+                <label>Full Name *</label>  
+                <input id="checkoutName" placeholder="Enter full name">  
+            </div>  
+
+            <div class="form-group">  
+                <label>Phone *</label>  
+                <input id="checkoutPhone" placeholder="01XXXXXXXXX">  
+            </div>  
+
+            <div class="form-group">  
+                <label>Email</label>  
+                <input id="checkoutEmail" type="email" placeholder="Email address">  
+            </div>  
+
+            <div class="form-group">  
+                <label>City *</label>  
+                <input id="checkoutCity" placeholder="City">  
+            </div>  
+
+            <div class="form-group full">  
+                <label>Delivery Address *</label>  
+                <textarea id="checkoutAddress" placeholder="House, Road, Area, District"></textarea>  
+            </div>  
+
+        </div>  
+
+        <h3>Payment Method</h3>  
+
+        <div class="payment-method">  
+
+            <label class="payment-option selected" onclick="selectPayment(this)">  
+                <input type="radio" name="payment" value="bKash" checked>  
+                📱<br><strong>bKash</strong>  
+            </label>  
+
+            <label class="payment-option" onclick="selectPayment(this)">  
+                <input type="radio" name="payment" value="Nagad">  
+                📲<br><strong>Nagad</strong>  
+            </label>  
+
+            <label class="payment-option" onclick="selectPayment(this)">  
+                <input type="radio" name="payment" value="COD">  
+                💵<br><strong>Cash on Delivery</strong>  
+            </label>  
+
+        </div>  
+
+        <div id="paymentInfo"  
+             style="background:#fff7ed;padding:15px;border-radius:8px;margin-bottom:15px;">  
+            <strong>bKash:</strong>  
+            Payment instructions can be displayed here after you connect your real payment gateway.  
+        </div>  
+
+        <button class="checkout-btn" onclick="placeOrder()">  
+            Place Order  
+        </button>  
+
+    </div>  
+
+    <div class="summary-card">  
+        <h3>Your Order</h3>  
+        <div id="checkoutItems"></div>  
+
+        <div class="summary-row">  
+            <span>Subtotal</span>  
+            <strong id="checkoutSubtotal">৳0</strong>  
+        </div>  
+
+        <div class="summary-row">  
+            <span>Delivery</span>  
+            <strong>৳60</strong>  
+        </div>  
+
+        <div class="summary-row summary-total">  
+            <span>Total</span>  
+            <strong id="checkoutTotal">৳0</strong>  
+        </div>  
+    </div>  
+
+</div>
+
+</section>  <!-- =====================================================  
+     FOOTER  
+===================================================== -->  <footer class="footer">  <div class="footer-grid">  
+
+    <div>  
+        <h3>Hafij Store Pro</h3>  
+        <p>  
+            Your modern online shopping destination.  
+            Shop quality products at affordable prices.  
+        </p>  
+    </div>  
+
+    <div>  
+        <h3>Shop</h3>  
+        <ul>  
+            <li>All Products</li>  
+            <li>Electronics</li>  
+            <li>Fashion</li>  
+            <li>Shoes</li>  
+        </ul>  
+    </div>  
+
+    <div>  
+        <h3>Customer Service</h3>  
+        <ul>  
+            <li>Contact Us</li>  
+            <li>Delivery Info</li>  
+            <li>Return Policy</li>  
+            <li>Privacy Policy</li>  
+        </ul>  
+    </div>  
+
+    <div>  
+        <h3>Contact</h3>  
+        <p>📞 +880 1XXXXXXXXX</p>  
+        <p>📧 support@example.com</p>  
+        <p>📍 Bangladesh</p>  
+    </div>  
+
+</div>  
+
+<div class="footer-bottom">  
+    © 2026 Hafij Store Pro. All Rights Reserved.  
+</div>
+
+</footer>  <!-- =====================================================  
+     MOBILE NAV  
+===================================================== -->  <nav class="mobile-nav">  <button id="navHome" class="active" onclick="showHome()">  
+    <div>🏠</div>  
+    Home  
+</button>  
+
+<button id="navSearch" onclick="focusSearch()">  
+    <div>🔎</div>  
+    Search  
+</button>  
+
+<button id="navCart" onclick="showCart()">  
+    <div>🛒</div>  
+    Cart  
+</button>  
+
+<button id="navWishlist" onclick="showWishlist()">  
+    <div>❤️</div>  
+    Wishlist  
+</button>  
+
+<button id="navAccount" onclick="showAccount()">  
+    <div>👤</div>  
+    Account  
+</button>
+
+</nav>  <!-- =====================================================  
+     PRODUCT MODAL  
+===================================================== -->  <div class="modal" id="productModal">  <div class="modal-box">  
+
+    <button class="close-btn" onclick="closeModal()">×</button>  
+
+    <div class="product-detail">  
+
+        <div class="detail-image">  
+            <img id="detailImage" src="" alt="">  
+        </div>  
+
+        <div class="detail-content">  
+
+            <div class="product-category" id="detailCategory"></div>  
+
+            <h2 id="detailTitle"></h2>  
+
+            <div class="rating" id="detailRating"></div>  
+
+            <div class="detail-price" id="detailPrice"></div>  
+
+            <p class="detail-description" id="detailDescription"></p>  
+
+            <div class="quantity">  
+                <button onclick="changeDetailQty(-1)">−</button>  
+                <input id="detailQty" value="1" min="1" readonly>  
+                <button onclick="changeDetailQty(1)">+</button>  
+            </div>  
+
+            <button class="primary-btn"  
+                    style="width:100%;"  
+                    onclick="addDetailToCart()">  
+                🛒 Add to Cart  
+            </button>  
+
+            <button class="primary-btn"  
+                    style="width:100%;margin-top:10px;background:#111827;"  
+                    onclick="buyNow()">  
+                Buy Now  
+            </button>  
+
+        </div>  
+
+    </div>  
+
+</div>
+
+</div>  <!-- =====================================================  
+     TOAST  
+===================================================== -->  <div class="toast" id="toast"></div>  <script>  
+/* =========================================================  
+   PRODUCT DATABASE  
+========================================================= */  
+  
+const products = [  
+  
+{  
+    id:1,  
+    title:"Premium Wireless Headphones",  
+    category:"Electronics",  
+    price:2490,  
+    oldPrice:3290,  
+    rating:4.8,  
+    badge:"BEST SELLER",  
+    image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80",  
+    description:"Premium wireless headphones with comfortable ear cushions, powerful sound and long battery life."  
+},  
+  
+{  
+    id:2,  
+    title:"Smart Watch Series X",  
+    category:"Electronics",  
+    price:3590,  
+    oldPrice:4490,  
+    rating:4.7,  
+    badge:"NEW",  
+    image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80",  
+    description:"Modern smartwatch with fitness tracking, notifications and stylish design."  
+},  
+  
+{  
+    id:3,  
+    title:"Classic Men's T-Shirt",  
+    category:"Fashion",  
+    price:690,  
+    oldPrice:990,  
+    rating:4.6,  
+    badge:"SALE",  
+    image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80",  
+    description:"Comfortable premium cotton t-shirt for everyday wear."  
+},  
+  
+{  
+    id:4,  
+    title:"Premium Sneakers",  
+    category:"Shoes",  
+    price:2890,  
+    oldPrice:3990,  
+    rating:4.9,  
+    badge:"POPULAR",  
+    image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80",  
+    description:"Lightweight stylish sneakers designed for everyday comfort."  
+},  
+  
+{  
+    id:5,  
+    title:"Women's Fashion Bag",  
+    category:"Fashion",  
+    price:1890,  
+    oldPrice:2490,  
+    rating:4.7,  
+    badge:"SALE",  
+    image:"https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=800&q=80",  
+    description:"Elegant and spacious fashion bag suitable for daily use."  
+},  
+  
+{  
+    id:6,  
+    title:"Wireless Bluetooth Speaker",  
+    category:"Electronics",  
+    price:1490,  
+    oldPrice:1990,  
+    rating:4.5,  
+    badge:"HOT",  
+    image:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=800&q=80",  
+    description:"Portable Bluetooth speaker with powerful audio and compact design."  
+},  
+  
+{  
+    id:7,  
+    title:"Luxury Face Care Set",  
+    category:"Beauty",  
+    price:1290,  
+    oldPrice:1690,  
+    rating:4.6,  
+    badge:"NEW",  
+    image:"https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80",  
+    description:"Complete daily skincare set for a fresh and healthy-looking appearance."  
+},  
+  
+{  
+    id:8,  
+    title:"Modern Table Lamp",  
+    category:"Home",  
+    price:990,  
+    oldPrice:1290,  
+    rating:4.4,  
+    badge:"SALE",  
+    image:"https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",  
+    description:"Minimal modern table lamp perfect for bedroom, office or study room."  
+},  
+  
+{  
+    id:9,  
+    title:"Smartphone Stand",  
+    category:"Accessories",  
+    price:390,  
+    oldPrice:550,  
+    rating:4.5,  
+    badge:"VALUE",  
+    image:"https://images.unsplash.com/photo-1586953208448-b95a79798f07?auto=format&fit=crop&w=800&q=80",  
+    description:"Adjustable smartphone stand for desk and home use."  
+},  
+  
+{  
+    id:10,  
+    title:"Men's Casual Shoes",  
+    category:"Shoes",  
+    price:2190,  
+    oldPrice:2990,  
+    rating:4.6,  
+    badge:"POPULAR",  
+    image:"https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=800&q=80",  
+    description:"Casual shoes with comfortable sole and modern everyday styling."  
+},  
+  
+{  
+    id:11,  
+    title:"Portable Power Bank",  
+    category:"Electronics",  
+    price:1190,  
+    oldPrice:1490,  
+    rating:4.5,  
+    badge:"HOT",  
+    image:"https://images.unsplash.com/photo-1609592424284-4b3f8a8b7f6d?auto=format&fit=crop&w=800&q=80",  
+    description:"Portable high-capacity power bank for charging your devices on the go."  
+},  
+  
+{  
+    id:12,  
+    title:"Home Storage Organizer",  
+    category:"Home",  
+    price:790,  
+    oldPrice:1090,  
+    rating:4.4,  
+    badge:"SALE",  
+    image:"https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80",  
+    description:"Useful storage organizer for keeping your home clean and organized."  
+}  
+  
+];  
+  
+/* =========================================================  
+   STATE  
+========================================================= */  
+  
+let cart = JSON.parse(localStorage.getItem("hafij_cart")) || [];  
+let wishlist = JSON.parse(localStorage.getItem("hafij_wishlist")) || [];  
+let currentProduct = null;  
+let currentCategory = "All";  
+  
+/* =========================================================  
+   HELPERS  
+========================================================= */  
+  
+function money(amount){  
+    return "৳" + Number(amount).toLocaleString("en-BD");  
+}  
+  
+function saveState(){  
+    localStorage.setItem("hafij_cart",JSON.stringify(cart));  
+    localStorage.setItem("hafij_wishlist",JSON.stringify(wishlist));  
+    updateCounts();  
+}  
+  
+function updateCounts(){  
+  
+    const cartCount = cart.reduce((sum,item)=>sum + item.qty,0);  
+  
+    document.getElementById("cartCount").textContent = cartCount;  
+    document.getElementById("wishlistCount").textContent = wishlist.length;  
+}  
+  
+/* =========================================================  
+   PRODUCT CARD  
+========================================================= */  
+  
+function productCard(product){  
+  
+    const liked = wishlist.includes(product.id);  
+  
+    return `  
+    <div class="product-card">  
+  
+        <div class="product-image"  
+             onclick="openProduct(${product.id})"  
+             style="cursor:pointer;">  
+  
+            <img src="${product.image}"  
+                 alt="${product.title}"  
+                 loading="lazy">  
+  
+            <span class="product-badge">  
+                ${product.badge}  
+            </span>  
+  
+            <button class="wishlist-btn ${liked ? "active" : ""}"  
+                    onclick="event.stopPropagation();toggleWishlist(${product.id})">  
+                ${liked ? "♥" : "♡"}  
+            </button>  
+  
+        </div>  
+  
+        <div class="product-info">  
+  
+            <div class="product-category">  
+                ${product.category}  
+            </div>  
+  
+            <div class="product-title">  
+                ${product.title}  
+            </div>  
+  
+            <div class="rating">  
+                ★★★★★ ${product.rating}  
+            </div>  
+  
+            <div class="price-row">  
+                <span class="price">${money(product.price)}</span>  
+                <span class="old-price">${money(product.oldPrice)}</span>  
+            </div>  
+  
+            <button class="add-cart"  
+                    onclick="addToCart(${product.id})">  
+                🛒 Add to Cart  
+            </button>  
+  
+        </div>  
+    </div>  
+    `;  
+}  
+  
+/* =========================================================  
+   RENDER PRODUCTS  
+========================================================= */  
+  
+function renderProducts(list = products){  
+  
+    const grid = document.getElementById("productsGrid");  
+  
+    if(!list.length){  
+        grid.innerHTML = `  
+            <div class="empty" style="grid-column:1/-1;">  
+                <div class="empty-icon">🔎</div>  
+                <h3>No products found</h3>  
+                <p>Try another search or category.</p>  
+            </div>  
+        `;  
+        return;  
+    }  
+  
+    grid.innerHTML = list.map(productCard).join("");  
+}  
+  
+/* =========================================================  
+   FILTER  
+========================================================= */  
+  
+function filterCategory(category){  
+  
+    currentCategory = category;  
+  
+    let filtered = products;  
+  
+    if(category !== "All"){  
+        filtered = products.filter(p=>p.category === category);  
+    }  
+  
+    document.getElementById("productsTitle").textContent =  
+        category === "All" ? "Popular Products" : category;  
+  
+    showHome(false);  
+  
+    renderProducts(filtered);  
+  
+    document.getElementById("productsSection")  
+        .scrollIntoView({behavior:"smooth"});  
+}  
+  
+/* =========================================================  
+   SEARCH  
+========================================================= */  
+  
+function searchProducts(value){  
+  
+    showHome(false);  
+  
+    const query = value.trim().toLowerCase();  
+  
+    let result = products;  
+  
+    if(query){  
+        result = products.filter(p =>  
+            p.title.toLowerCase().includes(query) ||  
+            p.category.toLowerCase().includes(query) ||  
+            p.description.toLowerCase().includes(query)  
+        );  
+  
+        document.getElementById("productsTitle").textContent =  
+            `Search Results (${result.length})`;  
+    }else{  
+        document.getElementById("productsTitle").textContent =  
+            "Popular Products";  
+    }  
+  
+    renderProducts(result);  
+}  
+  
+function focusSearch(){  
+  
+    showHome(false);  
+  
+    const input = document.getElementById("searchInput");  
+  
+    input.focus();  
+  
+    window.scrollTo({  
+        top:0,  
+        behavior:"smooth"  
+    });  
+}  
+  
+/* =========================================================  
+   CART  
+========================================================= */  
+  
+function addToCart(id,qty=1){  
+  
+    const product = products.find(p=>p.id === id);  
+  
+    if(!product) return;  
+  
+    const existing = cart.find(item=>item.id === id);  
+  
+    if(existing){  
+        existing.qty += qty;  
+    }else{  
+        cart.push({  
+            id:id,  
+            qty:qty  
+        });  
+    }  
+  
+    saveState();  
+  
+    showToast("Product added to cart 🛒");  
+}  
+  
+function removeFromCart(id){  
+  
+    cart = cart.filter(item=>item.id !== id);  
+  
+    saveState();  
+  
+    renderCart();  
+}  
+  
+function changeCartQty(id,change){  
+  
+    const item = cart.find(i=>i.id === id);  
+  
+    if(!item) return;  
+  
+    item.qty += change;  
+  
+    if(item.qty <= 0){  
+        removeFromCart(id);  
+        return;  
+    }  
+  
+    saveState();  
+  
+    renderCart();  
+}  
+  
+function getCartTotal(){  
+  
+    return cart.reduce((total,item)=>{  
+  
+        const product = products.find(p=>p.id === item.id);  
+  
+        return total + (product ? product.price * item.qty : 0);  
+  
+    },0);  
+}  
+  
+function renderCart(){  
+  
+    const list = document.getElementById("cartList");  
+  
+    if(!cart.length){  
+  
+        list.innerHTML = `  
+            <div class="empty">  
+                <div class="empty-icon">🛒</div>  
+                <h3>Your cart is empty</h3>  
+                <p>Add some products to your cart.</p>  
+                <button class="primary-btn"  
+                        style="margin-top:15px;"  
+                        onclick="showHome()">  
+                    Start Shopping  
+                </button>  
+            </div>  
+        `;  
+  
+    }else{  
+  
+        list.innerHTML = cart.map(item=>{  
+  
+            const product =  
+                products.find(p=>p.id === item.id);  
+  
+            if(!product) return "";  
+  
+            return `  
+            <div class="cart-item">  
+  
+                <img src="${product.image}"  
+                     alt="${product.title}">  
+  
+                <div>  
+                    <h3>${product.title}</h3>  
+  
+                    <div class="cart-price">  
+                        ${money(product.price)}  
+                    </div>  
+  
+                    <div class="mini-qty">  
+  
+                        <button onclick="changeCartQty(${product.id},-1)">  
+                            −  
+                        </button>  
+  
+                        <span>${item.qty}</span>  
+  
+                        <button onclick="changeCartQty(${product.id},1)">  
+                            +  
+                        </button>  
+  
+                    </div>  
+                </div>  
+  
+                <button class="remove-btn"  
+                        onclick="removeFromCart(${product.id})">  
+                    Remove  
+                </button>  
+  
+            </div>  
+            `;  
+  
+        }).join("");  
+  
+    }  
+  
+    const subtotal = getCartTotal();  
+    const delivery = cart.length ? 60 : 0;  
+  
+    document.getElementById("subtotal").textContent = money(subtotal);  
+    document.getElementById("delivery").textContent = money(delivery);  
+    document.getElementById("cartTotal").textContent =  
+        money(subtotal + delivery);  
+}  
+  
+/* =========================================================  
+   WISHLIST  
+========================================================= */  
+  
+function toggleWishlist(id){  
+  
+    if(wishlist.includes(id)){  
+  
+        wishlist = wishlist.filter(item=>item !== id);  
+  
+        showToast("Removed from wishlist");  
+  
+    }else{  
+  
+        wishlist.push(id);  
+  
+        showToast("Added to wishlist ❤️");  
+    }  
+  
+    saveState();  
+  
+    renderProductsByCurrentState();  
+  
+    renderWishlist();  
+}  
+  
+function renderProductsByCurrentState(){  
+  
+    const search =  
+        document.getElementById("searchInput").value.trim().toLowerCase();  
+  
+    let list = products;  
+  
+    if(search){  
+  
+        list = products.filter(p =>  
+            p.title.toLowerCase().includes(search) ||  
+            p.category.toLowerCase().includes(search)  
+        );  
+  
+    }else if(currentCategory !== "All"){  
+  
+        list = products.filter(p =>  
+            p.category === currentCategory  
+        );  
+    }  
+  
+    renderProducts(list);  
+}  
+  
+function renderWishlist(){  
+  
+    const grid = document.getElementById("wishlistGrid");  
+  
+    const items = products.filter(p=>wishlist.includes(p.id));  
+  
+    if(!items.length){  
+  
+        grid.innerHTML = `  
+            <div class="empty" style="grid-column:1/-1;">  
+                <div class="empty-icon">❤️</div>  
+                <h3>Your wishlist is empty</h3>  
+                <p>Add products you love.</p>  
+            </div>  
+        `;  
+  
+        return;  
+    }  
+  
+    grid.innerHTML = items.map(productCard).join("");  
+}  
+  
+/* =========================================================  
+   PRODUCT DETAILS  
+========================================================= */  
+  
+function openProduct(id){  
+  
+    const product = products.find(p=>p.id === id);  
+  
+    if(!product) return;  
+  
+    currentProduct = product;  
+  
+    document.getElementById("detailImage").src =  
+        product.image;  
+  
+    document.getElementById("detailTitle").textContent =  
+        product.title;  
+  
+    document.getElementById("detailCategory").textContent =  
+        product.category;  
+  
+    document.getElementById("detailRating").textContent =  
+        "★★★★★ " + product.rating;  
+  
+    document.getElementById("detailPrice").textContent =  
+        money(product.price);  
+  
+    document.getElementById("detailDescription").textContent =  
+        product.description;  
+  
+    document.getElementById("detailQty").value = 1;  
+  
+    document.getElementById("productModal")  
+        .classList.add("show");  
+}  
+  
+function closeModal(){  
+  
+    document.getElementById("productModal")  
+        .classList.remove("show");  
+  
+    currentProduct = null;  
+}  
+  
+function changeDetailQty(change){  
+  
+    const input = document.getElementById("detailQty");  
+  
+    let value = Number(input.value) + change;  
+  
+    if(value < 1) value = 1;  
+  
+    input.value = value;  
+}  
+  
+function addDetailToCart(){  
+  
+    if(!currentProduct) return;  
+  
+    const qty =  
+        Number(document.getElementById("detailQty").value);  
+  
+    addToCart(currentProduct.id,qty);  
+  
+    closeModal();  
+}  
+  
+function buyNow(){  
+  
+    addDetailToCart();  
+  
+    showCheckout();  
+}  
+  
+/* =========================================================  
+   PAGE NAVIGATION  
+========================================================= */  
+  
+function hideAllPages(){  
+  
+    document.getElementById("homePage").style.display = "none";  
+  
+    document.querySelectorAll(".page-panel")  
+        .forEach(p=>p.classList.remove("active"));  
+}  
+  
+function showHome(scroll=true){  
+  
+    hideAllPages();  
+  
+    document.getElementById("homePage").style.display = "block";  
+  
+    setActiveNav("navHome");  
+  
+    if(scroll){  
+        window.scrollTo({  
+            top:0,  
+            behavior:"smooth"  
+        });  
+    }  
+  
+    renderProductsByCurrentState();  
+}  
+  
+function showCart(){  
+  
+    hideAllPages();  
+  
+    document.getElementById("cartPage")  
+        .classList.add("active");  
+  
+    renderCart();  
+  
+    window.scrollTo({  
+        top:0,  
+        behavior:"smooth"  
+    });  
+  
+    setActiveNav("navCart");  
+}  
+  
+function showWishlist(){  
+  
+    hideAllPages();  
+  
+    document.getElementById("wishlistPage")  
+        .classList.add("active");  
+  
+    renderWishlist();  
+  
+    window.scrollTo({  
+        top:0,  
+        behavior:"smooth"  
+    });  
+  
+    setActiveNav("navWishlist");  
+}  
+  
+function showAccount(){  
+  
+    hideAllPages();  
+  
+    document.getElementById("accountPage")  
+        .classList.add("active");  
+  
+    loadAccount();  
+  
+    window.scrollTo({  
+        top:0,  
+        behavior:"smooth"  
+    });  
+  
+    setActiveNav("navAccount");  
+}  
+  
+function showCheckout(){  
+  
+    if(!cart.length){  
+  
+        showToast("Your cart is empty");  
+  
+        showCart();  
+  
+        return;  
+    }  
+  
+    hideAllPages();  
+  
+    document.getElementById("checkoutPage")  
+        .classList.add("active");  
+  
+    renderCheckout();  
+  
+    window.scrollTo({  
+        top:0,  
+        behavior:"smooth"  
+    });  
+}  
+  
+function setActiveNav(id){  
+  
+    document.querySelectorAll(".mobile-nav button")  
+        .forEach(btn=>btn.classList.remove("active"));  
+  
+    const btn = document.getElementById(id);  
+  
+    if(btn) btn.classList.add("active");  
+}  
+  
+function scrollToProducts(){  
+  
+    showHome(false);  
+  
+    document.getElementById("productsSection")  
+        .scrollIntoView({behavior:"smooth"});  
+}  
+  
+/* =========================================================  
+   CHECKOUT  
+========================================================= */  
+  
+function renderCheckout(){  
+  
+    const container =  
+        document.getElementById("checkoutItems");  
+  
+    container.innerHTML = cart.map(item=>{  
+  
+        const product =  
+            products.find(p=>p.id === item.id);  
+  
+        return `  
+            <div class="summary-row">  
+                <span>  
+                    ${product.title} × ${item.qty}  
+                </span>  
+                <strong>  
+                    ${money(product.price * item.qty)}  
+                </strong>  
+            </div>  
+        `;  
+  
+    }).join("");  
+  
+    const subtotal = getCartTotal();  
+    const delivery = 60;  
+  
+    document.getElementById("checkoutSubtotal")  
+        .textContent = money(subtotal);  
+  
+    document.getElementById("checkoutTotal")  
+        .textContent = money(subtotal + delivery);  
+}  
+  
+function selectPayment(element){  
+  
+    document.querySelectorAll(".payment-option")  
+        .forEach(el=>el.classList.remove("selected"));  
+  
+    element.classList.add("selected");  
+  
+    const value =  
+        element.querySelector("input").value;  
+  
+    const info =  
+        document.getElementById("paymentInfo");  
+  
+    if(value === "bKash"){  
+  
+        info.innerHTML = `  
+            <strong>bKash:</strong>  
+            Enter your bKash payment information here after connecting your real bKash payment gateway.  
+        `;  
+  
+    }else if(value === "Nagad"){  
+  
+        info.innerHTML = `  
+            <strong>Nagad:</strong>  
+            Enter your Nagad payment information here after connecting your real Nagad payment gateway.  
+        `;  
+  
+    }else{  
+  
+        info.innerHTML = `  
+            <strong>Cash on Delivery:</strong>  
+            Pay when your order is delivered.  
+        `;  
+    }  
+}  
+  
+/* =========================================================  
+   PLACE ORDER  
+========================================================= */  
+  
+function placeOrder(){  
+  
+    if(!cart.length){  
+  
+        showToast("Your cart is empty");  
+  
+        return;  
+    }  
+  
+    const name =  
+        document.getElementById("checkoutName").value.trim();  
+  
+    const phone =  
+        document.getElementById("checkoutPhone").value.trim();  
+  
+    const city =  
+        document.getElementById("checkoutCity").value.trim();  
+  
+    const address =  
+        document.getElementById("checkoutAddress").value.trim();  
+  
+    if(!name || !phone || !city || !address){  
+  
+        showToast("Please fill all required fields");  
+  
+        return;  
+    }  
+  
+    const payment =  
+        document.querySelector('input[name="payment"]:checked').value;  
+  
+    const orderNumber =  
+        "HSP" + Date.now().toString().slice(-8);  
+  
+    let message =  
+`🛍️ *NEW ORDER - HAFIJ STORE PRO*  
+  
+Order ID: ${orderNumber}  
+  
+👤 Customer: ${name}  
+📞 Phone: ${phone}  
+🏙️ City: ${city}  
+📍 Address: ${address}  
+  
+💳 Payment: ${payment}  
+  
+📦 Products:  
+`;  
+  
+    cart.forEach(item=>{  
+  
+        const product =  
+            products.find(p=>p.id === item.id);  
+  
+        message +=  
+`\n• ${product.title} × ${item.qty} = ${money(product.price * item.qty)}`;  
+    });  
+  
+    const total =  
+        getCartTotal() + 60;  
+  
+    message +=  
+`\n\n🚚 Delivery: ৳60  
+💰 Total: ${money(total)}  
+  
+Thank you!`;  
+  
+    /*  
+       IMPORTANT:  
+       Replace this number with your real WhatsApp number.  
+       Use international format without + or spaces.  
+       Example: 8801XXXXXXXXX  
+    */  
+  
+    const whatsappNumber = "8801XXXXXXXXX";  
+  
+    const whatsappURL =  
+        "https://wa.me/" +  
+        whatsappNumber +  
+        "?text=" +  
+        encodeURIComponent(message);  
+  
+    window.open(whatsappURL,"_blank");  
+  
+    cart = [];  
+  
+    saveState();  
+  
+    showToast("Order created successfully 🎉");  
+  
+    setTimeout(()=>{  
+        showHome();  
+    },1200);  
+}  
+  
+/* =========================================================  
+   ACCOUNT  
+========================================================= */  
+  
+function saveAccount(){  
+  
+    const account = {  
+  
+        name:  
+            document.getElementById("accountName").value,  
+  
+        phone:  
+            document.getElementById("accountPhone").value,  
+  
+        email:  
+            document.getElementById("accountEmail").value  
+    };  
+  
+    localStorage.setItem(  
+        "hafij_account",  
+        JSON.stringify(account)  
+    );  
+  
+    showToast("Account information saved");  
+}  
+  
+function loadAccount(){  
+  
+    const account =  
+        JSON.parse(localStorage.getItem("hafij_account"));  
+  
+    if(!account) return;  
+  
+    document.getElementById("accountName").value =  
+        account.name || "";  
+  
+    document.getElementById("accountPhone").value =  
+        account.phone || "";  
+  
+    document.getElementById("accountEmail").value =  
+        account.email || "";  
+}  
+  
+/* =========================================================  
+   TOAST  
+========================================================= */  
+  
+let toastTimer;  
+  
+function showToast(message){  
+  
+    const toast =  
+        document.getElementById("toast");  
+  
+    toast.textContent = message;  
+  
+    toast.classList.add("show");  
+  
+    clearTimeout(toastTimer);  
+  
+    toastTimer =  
+        setTimeout(()=>{  
+            toast.classList.remove("show");  
+        },2200);  
+}  
+  
+/* =========================================================  
+   INITIALIZE  
+========================================================= */  
+  
+document.addEventListener("DOMContentLoaded",()=>{  
+  
+    renderProducts();  
+  
+    renderCart();  
+  
+    renderWishlist();  
+  
+    updateCounts();  
+  
+    loadAccount();  
+  
+    /*  
+       Close modal when clicking outside  
+    */  
+  
+    document.getElementById("productModal")  
+        .addEventListener("click",function(e){  
+  
+            if(e.target === this){  
+                closeModal();  
+            }  
+  
+        });  
+  
+});  
+</script>  </body>  
+            </html>
